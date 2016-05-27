@@ -98,6 +98,7 @@ public class StartActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                                 //intent.putExtra("User", user);
                                 Player.nome = user;
+                                Player.id = Integer.valueOf(ris);
                                 startActivity(intent);
                                 finish();
                             }

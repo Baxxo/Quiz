@@ -39,7 +39,6 @@ public class QuizActivity extends AppCompatActivity {
         nome1.setText(nome);
         nome2.setText("avversario");
         ImpostaDomanda(0);
-
     }
 
     private void ImpostaDomanda(final int index){

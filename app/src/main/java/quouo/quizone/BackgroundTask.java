@@ -96,7 +96,7 @@ public class BackgroundTask extends AsyncTask<Request, Void, String> {
             e.printStackTrace();
         }
 
-        System.out.println("Ritorno");
+        System.out.println("Ritorno: " + result);
         return result;
     }
 

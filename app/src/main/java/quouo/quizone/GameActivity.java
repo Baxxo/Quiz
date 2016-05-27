@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity {
 
-    //TableLayout richiestesfida;
     Button gioca;
     int id;
     LinearLayout linearLayout;
@@ -35,12 +34,8 @@ public class GameActivity extends AppCompatActivity {
 
         gioca = (Button) findViewById(R.id.start);
 
-        /*Bundle usernamepassato = getIntent().getExtras();
-        String username = usernamepassato.getString("User");*/
-        String username = Player.nome;
-
         TextView usern = (TextView) findViewById(R.id.username);
-        usern.setText(username);
+        usern.setText(Player.nome);
 
         Richieste();
 
@@ -56,11 +51,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void Richieste() {
-        String nome = "1-Ciao-2-bello-3-Gian-4-Fantastico-5-Favoloso-";
-        String copia[] = nome.split("-");
+        ConnectionHandler con = new ConnectionHandler();
 
-        for (int i = 0; i < copia.length; i += 2) {
-            AggiungiSfida(copia[i + 1], copia[i]);
+        String[] carica = con.CaricaPartite(Player.id).split("<->");
+
+        for (int i = 0; i < carica.length - 1; i += 2) {
+            AggiungiSfida(carica[i + 1], carica[i]);
         }
     }
 
