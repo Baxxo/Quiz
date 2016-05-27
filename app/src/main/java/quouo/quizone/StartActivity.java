@@ -241,54 +241,6 @@ public class StartActivity extends AppCompatActivity {
     void Debug(String s) {
         System.out.println(s);
     }
-    /*
-    public void ScritturaFile(String nome, String pass) {
-        try {
-            OutputStreamWriter osw = new OutputStreamWriter(this.openFileOutput("login.txt", Context.MODE_PRIVATE));
-            osw.write("Ciao Mondo");
-            osw.flush();
-            osw.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try{
-            FileOutputStream fOut = new FileOutputStream("login.txt");
-            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-            myOutWriter.append("your data here");
-            myOutWriter.close();
-            fOut.close();
-        }catch(Exception e){}
-    }
-
-    public String LetturaFile() {
-
-        BufferedReader reader = null;
-        StringBuilder stringB = new StringBuilder();
-        try {
-            reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("login.txt"), "UTF-8"));
-
-            String mLine;
-            while ((mLine = reader.readLine()) != null) {
-                stringB.append(mLine);
-            }
-        } catch (IOException e) {
-            System.out.println("IMPOSSIBILE APRIRE IL FILER");
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    System.out.println("IMPOSSIBILE CHIUDERE IL FILEREADER");
-                }
-            }
-        }
-        makeToast(stringB.toString());
-        return String.valueOf(stringB);
-    }*/
-
 
 }
 
