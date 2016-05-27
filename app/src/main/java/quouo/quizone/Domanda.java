@@ -14,7 +14,6 @@ public class Domanda {
     Risposta[] risposte = new Risposta[4];
 
     public Domanda(String domNonDivisa) {
-        System.out.println(domNonDivisa);
         String[] temp = domNonDivisa.split("<->");
         testo = temp[0];
         risposte[0] = new Risposta(temp[1], true);
@@ -55,6 +54,6 @@ public class Domanda {
                 RandNum(arr);
             }
         }
-        return 0;
+        return rand;
     }
 }

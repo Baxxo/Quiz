@@ -18,11 +18,13 @@
                 <action
                     android:name="android.intent.action.MAIN"
                     android:noHistory="true" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".GameActivity" />
         <activity android:name=".QuizActivity" />
+        <activity android:name=".gameOver"></activity>
     </application>
 
 </manifest>

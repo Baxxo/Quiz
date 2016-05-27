@@ -78,6 +78,7 @@ public class ConnectionHandler {
         backgroundTask = new BackgroundTask();
         Domanda[] domande = new Domanda[5];
         String[] ids = new String[5];
+        System.out.println("Carico le domande della partita " + idPartita);
 
         backgroundTask.SetParams(new String[] { idPartita });
 

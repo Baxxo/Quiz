@@ -49,18 +49,16 @@ public class GameActivity extends AppCompatActivity {
 
     public void Richieste() {
         ConnectionHandler con = new ConnectionHandler();
-        System.out.println("Player id: " + Player.id);
         String[] carica = con.CaricaPartite(Player.id).split("<->");
 
         for (int i = 0; i < carica.length - 1; i += 2) {
-            System.out.println("Carico il numero: " + i);
             AggiungiSfida(carica[i + 1], carica[i]);
         }
     }
 
     private void AggiungiSfida(String useramico, final String id) {
         linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
-
+        System.out.println("Carico partita id: " + id);
         TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
 

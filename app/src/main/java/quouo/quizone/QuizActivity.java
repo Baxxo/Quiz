@@ -1,6 +1,9 @@
 package quouo.quizone;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +20,7 @@ public class QuizActivity extends AppCompatActivity {
     TextView numeroDomanda;
     TextView nome1;
     TextView nome2;
+    boolean canPlay;
     int numdomanda = 1;
 
     @Override
@@ -25,6 +29,7 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         ConnectionHandler connectionHandler = new ConnectionHandler();
+        System.out.println("Id partita: " + getIntent().getStringExtra("idPartita"));
         domande = connectionHandler.domande(getIntent().getStringExtra("idPartita"));
         nome1 = (TextView)findViewById(R.id.nome1);
         nome2 = (TextView)findViewById(R.id.nome2);
@@ -42,67 +47,43 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void ImpostaDomanda(final int index){
-	if(index > 4){
-        makeToast("Il tuo punteggio:  " + punteggio);
-	    return;
-	}
+        if(index > 4){
+            Intent intent = new Intent(getApplicationContext(), gameOver.class);
+            intent.putExtra("Punteggio", punteggio);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        canPlay = true;
         domanda.setText(domande[index].getTesto());
-        buttons[0].setText(domande[index].getRisposta(0).getTesto());
-        buttons[1].setText(domande[index].getRisposta(1).getTesto());
-        buttons[2].setText(domande[index].getRisposta(2).getTesto());
-        buttons[3].setText(domande[index].getRisposta(3).getTesto());
 
-        buttons[0].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-		if(domande[index].getRisposta(0).isGiusto()){
-		    punteggio ++;
-                ImpostaDomanda(index + 1);
-                buttons[0].setBackgroundColor(0xFF00FF00);
-        }else{
-
+        for (int i = 0; i < 4; i++){
+            buttons[i].setText(domande[index].getRisposta(i).getTesto());
+            buttons[i].setBackgroundColor(Color.WHITE);
+            final int temp = i;
+            buttons[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(canPlay) {
+                        canPlay = false;
+                        if (domande[index].getRisposta(temp).isGiusto()) {
+                            punteggio++;
+                            buttons[temp].setBackgroundColor(Color.GREEN);
+                        } else {
+                            buttons[temp].setBackgroundColor(Color.RED);
+                        }
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ImpostaDomanda(index + 1);
+                            }
+                        }, 1000);
+                    }
+                }
+            });
         }
-            }
-        });
-
-        buttons[1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-		if(domande[index].getRisposta(1).isGiusto()){
-		    punteggio ++;
-                ImpostaDomanda(index + 1);
-                buttons[1].setBackgroundColor(0xFF00FF00);
-        }else{
-
-        }
-            }
-        });
-
-        buttons[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-		if(domande[index].getRisposta(2).isGiusto()){
-		    punteggio ++;
-                ImpostaDomanda(index + 1);
-                buttons[2].setBackgroundColor(0xFF00FF00);
-        }else{
-
-        }
-            }
-        });
-
-        buttons[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-		if(domande[index].getRisposta(3).isGiusto()){
-		    punteggio ++;
-                ImpostaDomanda(index + 1);
-                buttons[3].setBackgroundColor(0xFF00FF00);
-        }else{
-
-        }
-            }
-        });
 
         numeroDomanda.setText(numdomanda + "/5");
         numdomanda++;
