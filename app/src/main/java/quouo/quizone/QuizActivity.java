@@ -58,8 +58,7 @@ public class QuizActivity extends AppCompatActivity {
 		if(domande[index].getRisposta(0).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
-                buttons[0].setBackgroundColor(0x0000FF00);
-                buttons[0].invalidate();
+                buttons[0].setBackgroundColor(0xFF00FF00);
         }else{
 
         }
@@ -72,8 +71,7 @@ public class QuizActivity extends AppCompatActivity {
 		if(domande[index].getRisposta(1).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
-                buttons[1].setBackgroundColor(0x0000FF00);
-                buttons[1].invalidate();
+                buttons[1].setBackgroundColor(0xFF00FF00);
         }else{
 
         }
@@ -86,8 +84,7 @@ public class QuizActivity extends AppCompatActivity {
 		if(domande[index].getRisposta(2).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
-                buttons[2].setBackgroundColor(0x0000FF00);
-                buttons[2].invalidate();
+                buttons[2].setBackgroundColor(0xFF00FF00);
         }else{
 
         }
@@ -100,8 +97,7 @@ public class QuizActivity extends AppCompatActivity {
 		if(domande[index].getRisposta(3).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
-                buttons[3].setBackgroundColor(0x0000FF00);
-                buttons[3].invalidate();
+                buttons[3].setBackgroundColor(0xFF00FF00);
         }else{
 
         }

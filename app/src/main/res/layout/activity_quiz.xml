@@ -92,7 +92,9 @@
             android:text="Risposta1"
             android:id="@+id/risposta1"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10" />
+            android:layout_weight="0.10"
+            android:layout_marginTop="10dp"
+            android:background="#00ffbb" />
 
         <Button
             android:layout_width="320dp"
@@ -100,7 +102,9 @@
             android:text="risposta2"
             android:id="@+id/risposta2"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10"/>
+            android:layout_weight="0.10"
+            android:layout_marginTop="10dp"
+            android:background="#00ffbb" />
 
         <Button
             android:layout_width="320dp"
@@ -108,7 +112,9 @@
             android:text="risposta3"
             android:id="@+id/risposta3"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10" />
+            android:layout_weight="0.10"
+            android:layout_marginTop="10dp"
+            android:background="#00ffbb" />
 
         <Button
             android:layout_width="320dp"
@@ -116,7 +122,9 @@
             android:text="risposta4"
             android:id="@+id/risposta4"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10" />
+            android:layout_weight="0.10"
+            android:layout_marginTop="10dp"
+            android:background="#00ffbb" />
     </LinearLayout>
 
     <TextView
