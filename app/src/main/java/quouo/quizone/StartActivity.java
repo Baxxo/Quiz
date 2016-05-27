@@ -53,7 +53,6 @@ public class StartActivity extends AppCompatActivity {
         makeToast("fuori:" + accesso);
 
         if (!hasConnection()) {
-            //con = false;
             d.setTitle("Login");
             d.setCancelable(false);
             d.setContentView(R.layout.dialog);
