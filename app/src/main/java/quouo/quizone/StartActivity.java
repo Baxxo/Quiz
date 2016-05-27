@@ -3,9 +3,12 @@ package quouo.quizone;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,19 +16,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.app.Activity;
-import android.os.Bundle;
 import android.widget.Toast;
-
-
 import android.os.Handler;
 
-import static quouo.quizone.R.layout.activity_start;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Date;
 
 public class StartActivity extends AppCompatActivity {
 
     Handler handler = new Handler();
     Boolean con;
+    Boolean accesso = false;
     EditText et1;
     EditText et2;
     TextView t1;
@@ -36,6 +45,8 @@ public class StartActivity extends AppCompatActivity {
     Dialog d;
     String ris;
     ConnectionHandler hand = new ConnectionHandler();
+    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    SharedPreferences.Editor editor = preferences.edit();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,22 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         d = new Dialog(this);
+
+        editor.putString("Accesso", String.valueOf(accesso));
+        editor.apply();
+
+        String acc = preferences.getString("Accesso", "false");
+        if (!acc.equalsIgnoreCase("")) {
+            acc = acc;
+        }
+        makeToast(acc);
+
+        if (accesso == true){
+            et1.setVisibility(View.INVISIBLE);
+            et2.setVisibility(View.INVISIBLE);
+            t1.setVisibility(View.INVISIBLE);
+            t2.setVisibility(View.INVISIBLE);
+        }
 
         if (!hasConnection()) {
             //con = false;
@@ -64,6 +91,7 @@ public class StartActivity extends AppCompatActivity {
             });
         }
 
+
         et1 = (EditText) findViewById(R.id.editText);
         et2 = (EditText) findViewById(R.id.editText2);
         t1 = (TextView) findViewById(R.id.textView4);
@@ -74,29 +102,38 @@ public class StartActivity extends AppCompatActivity {
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ris = hand.Login(String.valueOf(et1.getText()), String.valueOf(et2.getText()));
-                if (ris.equals("FAILED")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("login " + ris);
-                        }
-                    }, 1);
-                } else {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("login " + ris);
-                        }
-                    }, 1);
-                    user = String.valueOf(et1.getText());
+                if(accesso == false){
+                    accesso = true;
+                }
+                editor.putString("nome", String.valueOf(et1.getText()));
+                editor.putString("pass", String.valueOf(et2.getText()));
+                editor.apply();
+                ris = hand.Login(preferences.getString("nome", "false")  ,preferences.getString("pass", "false"));
 
+                if (ris.equals("FAILED")) {
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            makeToast("login " + ris);
+                        }
+                    }, 1);
+
+                } else {
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            makeToast("login " + ris);
+                        }
+                    }, 1);
+
+                    user = String.valueOf(et1.getText());
                     if (con == true) {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                //intent.putExtra("User", user);
                                 Player.nome = user;
                                 startActivity(intent);
                                 finish();
@@ -113,7 +150,6 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ris = hand.Registrazione(String.valueOf(et1.getText()), String.valueOf(et2.getText()));
-                makeToast("ciao");
                 if (ris.equals("FAILED")) {
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -175,14 +211,12 @@ public class StartActivity extends AppCompatActivity {
 
         NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         if (wifiNetwork != null && wifiNetwork.isConnected()) {
-            makeToast("Using Wi-Fi");
             con = true;
             return true;
         }
 
         NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         if (mobileNetwork != null && mobileNetwork.isConnected()) {
-            makeToast("Using DATA");
             con = true;
             return true;
         }
@@ -206,6 +240,54 @@ public class StartActivity extends AppCompatActivity {
     void Debug(String s) {
         System.out.println(s);
     }
+    /*
+    public void ScritturaFile(String nome, String pass) {
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(this.openFileOutput("login.txt", Context.MODE_PRIVATE));
+            osw.write("Ciao Mondo");
+            osw.flush();
+            osw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try{
+            FileOutputStream fOut = new FileOutputStream("login.txt");
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.append("your data here");
+            myOutWriter.close();
+            fOut.close();
+        }catch(Exception e){}
+    }
+
+    public String LetturaFile() {
+
+        BufferedReader reader = null;
+        StringBuilder stringB = new StringBuilder();
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("login.txt"), "UTF-8"));
+
+            String mLine;
+            while ((mLine = reader.readLine()) != null) {
+                stringB.append(mLine);
+            }
+        } catch (IOException e) {
+            System.out.println("IMPOSSIBILE APRIRE IL FILER");
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.out.println("IMPOSSIBILE CHIUDERE IL FILEREADER");
+                }
+            }
+        }
+        makeToast(stringB.toString());
+        return String.valueOf(stringB);
+    }*/
+
 
 }
 
