@@ -6,14 +6,10 @@ import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,25 +38,27 @@ public class GameActivity extends AppCompatActivity {
         gioca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ConnectionHandler con = new ConnectionHandler();
+                String id = con.CreaPartita(Player.id);
                 Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                intent.putExtra("idPartita", id);
                 startActivity(intent);
-
             }
         });
     }
 
     public void Richieste() {
         ConnectionHandler con = new ConnectionHandler();
-
+        System.out.println("Player id: " + Player.id);
         String[] carica = con.CaricaPartite(Player.id).split("<->");
 
         for (int i = 0; i < carica.length - 1; i += 2) {
+            System.out.println("Carico il numero: " + i);
             AggiungiSfida(carica[i + 1], carica[i]);
         }
     }
 
-    private void AggiungiSfida(String useramico, String id) {
+    private void AggiungiSfida(String useramico, final String id) {
         linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
 
         TableRow row = new TableRow(getApplicationContext());
@@ -72,6 +70,14 @@ public class GameActivity extends AppCompatActivity {
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
+        accetta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                intent.putExtra("idPartita", id);
+                startActivity(intent);
+            }
+        });
 
         Button rifiuta = new Button(getApplicationContext());
         rifiuta.setText("Rifiuta");

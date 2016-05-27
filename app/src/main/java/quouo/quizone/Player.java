@@ -12,7 +12,4 @@ public class Player {
     public static String nome;
     public static int partite;
     public static int pareggio;
-
-
-
 }

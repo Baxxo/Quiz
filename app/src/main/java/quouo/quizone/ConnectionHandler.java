@@ -49,7 +49,7 @@ public class ConnectionHandler {
 
         try {
             temp = backgroundTask.execute(Request.CARICAPARTITE).get();
-            System.out.println();
+            System.out.println(temp);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -59,12 +59,27 @@ public class ConnectionHandler {
         return temp;
     }
 
-    public Domanda[] domande(int idPartita){
+    public String CreaPartita(int id){
+        backgroundTask = new BackgroundTask();
+        backgroundTask.SetParams(new String[] {String.valueOf(id)});
+        String ret = "FAILED";
+        try {
+            ret = backgroundTask.execute(Request.CREAPARTITA).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
+
+    public Domanda[] domande(String idPartita){
         backgroundTask = new BackgroundTask();
         Domanda[] domande = new Domanda[5];
         String[] ids = new String[5];
 
-        backgroundTask.SetParams(new String[] {String.valueOf(idPartita)});
+        backgroundTask.SetParams(new String[] { idPartita });
 
         try {
             ids = backgroundTask.execute(Request.CARICADOMANDE).get().split("<->");

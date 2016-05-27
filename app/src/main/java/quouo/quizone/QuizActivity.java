@@ -25,7 +25,7 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
 
         ConnectionHandler connectionHandler = new ConnectionHandler();
-        domande = connectionHandler.domande(3);
+        domande = connectionHandler.domande(getIntent().getStringExtra("idPartita"));
         nome1 = (TextView)findViewById(R.id.nome1);
         nome2 = (TextView)findViewById(R.id.nome2);
 
@@ -35,8 +35,8 @@ public class QuizActivity extends AppCompatActivity {
         buttons[1] = (Button)findViewById(R.id.risposta2);
         buttons[2] = (Button)findViewById(R.id.risposta3);
         buttons[3] = (Button)findViewById(R.id.risposta4);
-        String nome = Player.nome;
-        nome1.setText(nome);
+
+        nome1.setText(Player.nome);
         nome2.setText("avversario");
         ImpostaDomanda(0);
     }
