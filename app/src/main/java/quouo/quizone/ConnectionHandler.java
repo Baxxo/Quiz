@@ -41,6 +41,24 @@ public class ConnectionHandler {
         return ret;
     }
 
+    public String CaricaPartite(int id){
+        backgroundTask = new BackgroundTask();
+        backgroundTask.SetParams(new String[] {String.valueOf(id)});
+
+        String temp = "FAILED";
+
+        try {
+            temp = backgroundTask.execute(Request.CARICAPARTITE).get();
+            System.out.println();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
+
     public Domanda[] domande(int idPartita){
         backgroundTask = new BackgroundTask();
         Domanda[] domande = new Domanda[5];

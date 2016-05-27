@@ -14,6 +14,10 @@ public class QuizActivity extends AppCompatActivity {
     Button[] buttons = new Button[4];
     TextView domanda;
     int punteggio = 0;
+    TextView numeroDomanda;
+    TextView nome1;
+    TextView nome2;
+    int numdomanda = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +26,18 @@ public class QuizActivity extends AppCompatActivity {
 
         ConnectionHandler connectionHandler = new ConnectionHandler();
         domande = connectionHandler.domande(3);
+        nome1 = (TextView)findViewById(R.id.nome1);
+        nome2 = (TextView)findViewById(R.id.nome2);
 
+        numeroDomanda = (TextView)findViewById(R.id.numeroDomanda);
         domanda = (TextView)findViewById(R.id.Domanda);
         buttons[0] = (Button)findViewById(R.id.risposta1);
         buttons[1] = (Button)findViewById(R.id.risposta2);
         buttons[2] = (Button)findViewById(R.id.risposta3);
         buttons[3] = (Button)findViewById(R.id.risposta4);
-
+        String nome = Player.nome;
+        nome1.setText(nome);
+        nome2.setText("avversario");
         ImpostaDomanda(0);
     }
 
@@ -46,38 +55,57 @@ public class QuizActivity extends AppCompatActivity {
         buttons[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-		if(domande[index].getRisposta(0).isGiusto())
+		if(domande[index].getRisposta(0).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
+                buttons[0].setBackgroundColor(0xFF00FF00);
+        }else{
+
+        }
             }
         });
 
         buttons[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-		if(domande[index].getRisposta(1).isGiusto())
+		if(domande[index].getRisposta(1).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
+                buttons[1].setBackgroundColor(0xFF00FF00);
+        }else{
+
+        }
             }
         });
 
         buttons[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-		if(domande[index].getRisposta(2).isGiusto())
+		if(domande[index].getRisposta(2).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
+                buttons[2].setBackgroundColor(0xFF00FF00);
+        }else{
+
+        }
             }
         });
 
         buttons[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-		if(domande[index].getRisposta(3).isGiusto())
+		if(domande[index].getRisposta(3).isGiusto()){
 		    punteggio ++;
                 ImpostaDomanda(index + 1);
+                buttons[3].setBackgroundColor(0xFF00FF00);
+        }else{
+
+        }
             }
         });
+
+        numeroDomanda.setText(numdomanda + "/5");
+        numdomanda++;
     }
 
 
