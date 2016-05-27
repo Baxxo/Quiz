@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,32 +46,31 @@ public class StartActivity extends AppCompatActivity {
     Dialog d;
     String ris;
     ConnectionHandler hand = new ConnectionHandler();
-    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-    SharedPreferences.Editor editor = preferences.edit();
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start);
+
+        /*preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();*/
 
         d = new Dialog(this);
 
-        editor.putString("Accesso", String.valueOf(accesso));
-        editor.apply();
+        /*editor.putString("Accesso", String.valueOf(accesso));
+        editor.apply();*/
 
-        String acc = preferences.getString("Accesso", "false");
+        /*String acc = preferences.getString("Accesso", "false");
         if (!acc.equalsIgnoreCase("")) {
             acc = acc;
         }
-        makeToast(acc);
-
-        if (accesso == true){
-            et1.setVisibility(View.INVISIBLE);
-            et2.setVisibility(View.INVISIBLE);
-            t1.setVisibility(View.INVISIBLE);
-            t2.setVisibility(View.INVISIBLE);
-        }
+        makeToast(acc);*/
 
         if (!hasConnection()) {
             //con = false;
@@ -102,14 +102,14 @@ public class StartActivity extends AppCompatActivity {
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(accesso == false){
+                /*if(accesso == false){
                     accesso = true;
                 }
                 editor.putString("nome", String.valueOf(et1.getText()));
                 editor.putString("pass", String.valueOf(et2.getText()));
                 editor.apply();
-                ris = hand.Login(preferences.getString("nome", "false")  ,preferences.getString("pass", "false"));
-
+                ris = hand.Login(preferences.getString("nome", "false")  ,preferences.getString("pass", "false"));*/
+                ris = hand.Login(String.valueOf(et1.getText()), String.valueOf(et2.getText()));
                 if (ris.equals("FAILED")) {
 
                     handler.postDelayed(new Runnable() {
@@ -139,8 +139,6 @@ public class StartActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }
-
-
                         }, 1000);
                     }
                 }
@@ -181,8 +179,7 @@ public class StartActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                intent.putExtra("User", user);
-
+                                Player.nome = user;
                                 startActivity(intent);
                             }
                         }, 1000);
@@ -230,16 +227,6 @@ public class StartActivity extends AppCompatActivity {
 
         con = false;
         return false;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Debug("Resume");
-    }
-
-    void Debug(String s) {
-        System.out.println(s);
     }
 
 }
