@@ -96,7 +96,8 @@ public class StartActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                intent.putExtra("User", user);
+                                //intent.putExtra("User", user);
+                                Player.nome = user;
                                 startActivity(intent);
                                 finish();
                             }

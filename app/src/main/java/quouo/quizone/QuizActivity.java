@@ -41,8 +41,6 @@ public class QuizActivity extends AppCompatActivity {
         ImpostaDomanda(0);
     }
 
-    //https://github.com/Baxxo/Quiz1.git
-
     private void ImpostaDomanda(final int index){
 	if(index > 4){
         makeToast("Il tuo punteggio:  " + punteggio);
