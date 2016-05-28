@@ -62,8 +62,7 @@ public class BackgroundTask extends AsyncTask<Request, Void, String> {
                 builder.scheme("http").authority("quiz1.altervista.org")
                         .appendPath("database.php")
                         .appendQueryParameter("richiesta", "creaPartita")
-                        .appendQueryParameter("id1", parametres[0])
-                        .appendQueryParameter("id2", parametres[1]);
+                        .appendQueryParameter("id1", parametres[0]);
                 break;
             case CARICAPARTITE:
                 builder.scheme("http").authority("quiz1.altervista.org")
@@ -87,6 +86,7 @@ public class BackgroundTask extends AsyncTask<Request, Void, String> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             buffer.append(reader.readLine());
             result = buffer.toString();
+            System.out.println("Buffer: " + buffer.toString());
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
