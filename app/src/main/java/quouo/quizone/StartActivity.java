@@ -36,6 +36,7 @@ public class StartActivity extends AppCompatActivity {
     String ris = new String();
     String nome;
     String pass;
+    String id;
     ConnectionHandler hand = new ConnectionHandler();
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -83,33 +84,29 @@ public class StartActivity extends AppCompatActivity {
             accesso2 = true;
             pass = preferences.getString("pass", "null");
         }
+        if (preferences.getString("id", "null").equals("null")) {
+            accesso = false;
+        } else {
+            accesso = true;
+            id = preferences.getString("id", "null");
+        }
 
-        if (accesso1 == true && accesso2 == true) {
+        if (accesso1 == true && accesso2 == true && accesso == true) {
             ris = hand.Login(nome, pass);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    makeToast("login " + ris);
-                }
-            }, 1);
+            makeToast("login " + ris);
 
             if (con == true) {
                 editor.putString("nome", nome);
                 editor.putString("pass", pass);
+                editor.putString("id", id);
                 editor.apply();
                 progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                        Player.nome = nome;
-                        Player.id = Integer.valueOf(ris);
-                        progress.dismiss();
-                        startActivity(intent);
-                        finish();
-                    }
-
-                }, 1000);
+                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                Player.nome = nome;
+                Player.id = Integer.valueOf(id);
+                progress.dismiss();
+                startActivity(intent);
+                finish();
             }
         }
 
