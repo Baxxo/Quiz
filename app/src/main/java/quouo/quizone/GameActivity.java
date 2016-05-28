@@ -78,6 +78,7 @@ public class GameActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                 intent.putExtra("idPartita", id);
                 startActivity(intent);
+                finish();
             }
         });
 
