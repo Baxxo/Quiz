@@ -76,7 +76,7 @@ public class StartActivity extends AppCompatActivity {
             });
         }
 
-        makeToast(preferences.getString("nome", "null") + " " + preferences.getString("pass", "null"));
+        makeToast("Login eseguito come :" + preferences.getString("nome", "null"));
 
         if (preferences.getString("nome", "null").equals("null")) {
             accesso1 = false;
@@ -102,6 +102,8 @@ public class StartActivity extends AppCompatActivity {
                 et2.setVisibility(View.INVISIBLE);
                 t1.setVisibility(View.INVISIBLE);
                 t2.setVisibility(View.INVISIBLE);
+                accedi.setVisibility(View.INVISIBLE);
+                registrati.setVisibility(View.INVISIBLE);
 
                 editor.putString("nome", nome);
                 editor.putString("pass", pass);
@@ -133,13 +135,12 @@ public class StartActivity extends AppCompatActivity {
 
                 if (ris.equals("FAILED")) {
 
-                    makeToast("login " + ris);
+                    makeToast("LOGIN " + ris + "!!!!!");
 
                 } else {
 
-                    makeToast("login " + ris);
-
                     nome = String.valueOf(et1.getText());
+
                     if (con == true) {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
@@ -167,18 +168,16 @@ public class StartActivity extends AppCompatActivity {
 
                 if (ris.equals("FAILED")) {
 
-                    makeToast("registration " + ris);
+                    makeToast("REGISTRATION " + ris + "!!!!!");
 
                 }
                 if (ris.equals("USER ALREADY EXISTS")) {
 
-                    makeToast("registration " + ris);
+                    makeToast("User already exists!!!");
 
                 }
 
                 if (ris.equals("SUCCESS")) {
-
-                    makeToast("registration " + ris);
 
                     nome = String.valueOf(et1.getText());
 

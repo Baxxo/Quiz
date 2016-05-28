@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="150dp">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Esci"
         android:id="@+id/esci1"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         android:background="#ffffff"
         android:layout_marginLeft="50dp"
         android:textColor="#000000"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="Torna"
         android:id="@+id/torna"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         android:background="#ffffff"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="50dp"
