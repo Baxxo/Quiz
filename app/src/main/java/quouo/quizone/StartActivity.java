@@ -76,7 +76,6 @@ public class StartActivity extends AppCompatActivity {
             });
         }
 
-        makeToast("Login eseguito come :" + preferences.getString("nome", "null"));
 
         if (preferences.getString("nome", "null").equals("null")) {
             accesso1 = false;
@@ -93,8 +92,6 @@ public class StartActivity extends AppCompatActivity {
 
         if (accesso1 == true && accesso2 == true) {
             ris = hand.Login(nome, pass);
-
-            makeToast("login " + ris);
 
             if (con == true) {
 

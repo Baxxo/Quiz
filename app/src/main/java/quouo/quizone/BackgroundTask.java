@@ -74,7 +74,7 @@ public class BackgroundTask extends AsyncTask<Request, Void, String> {
                         .appendPath("database.php")
                         .appendQueryParameter("richiesta", "terminaPartita")
                         .appendQueryParameter("idP", parametres[0])
-                        .appendQueryParameter("nomeUser", parametres[1]);
+                        .appendQueryParameter("idUser", parametres[1]);
                 break;
         }
 

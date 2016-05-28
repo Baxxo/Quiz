@@ -2,9 +2,10 @@ package quouo.quizone;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.provider.Settings;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +40,18 @@ public class GameActivity extends AppCompatActivity {
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
 
+        TextView logOut = (TextView)findViewById(R.id.textView3);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                p.edit().clear().commit();
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         Richieste();
 
         gioca.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +62,7 @@ public class GameActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                 intent.putExtra("idPartita", id);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -83,6 +97,7 @@ public class GameActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                 intent.putExtra("idPartita", id);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -91,8 +106,9 @@ public class GameActivity extends AppCompatActivity {
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backgroundTask.SetParams(new String[]{Player.nome, id});
-                backgroundTask.execute(Request.ANNULLAPARTITA);
+                ConnectionHandler con = new ConnectionHandler();
+                String ret = con.TerminaPartita(id, Player.id);
+                Toast.makeText(getApplicationContext(), ret, Toast.LENGTH_SHORT);
             }
         });
 
