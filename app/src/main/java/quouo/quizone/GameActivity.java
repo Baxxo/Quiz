@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
     Button gioca;
     int id;
     Dialog d;
-    LinearLayout linearLayout;
+    TableLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +61,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void AggiungiSfida(String useramico, final String id) {
-        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
+        linearLayout = (TableLayout)findViewById(R.id.tableLayout);
         System.out.println("Carico partita id: " + id);
-        final TableRow row = new TableRow(getApplicationContext());
-        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
+        TableRow row = new TableRow(getApplicationContext());
+        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
 
-        final TextView nome = new TextView(getApplicationContext());
+        TextView nome = new TextView(getApplicationContext());
         nome.setText(useramico);
         nome.setTextColor(Color.BLACK);
 
-        final Button accetta = new Button(getApplicationContext());
+        TextView nullo = new TextView(getApplicationContext());
+        nullo.setText("          ");
+
+        Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
         accetta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,20 +84,18 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        final Button rifiuta = new Button(getApplicationContext());
+        Button rifiuta = new Button(getApplicationContext());
         rifiuta.setText("Rifiuta");
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                row.removeView(accetta);
-                row.removeView(nome);
-                row.removeView(rifiuta);
-                Intent intent = new Intent(getApplicationContext(), ConnectionHandler.class);
-               // Intent.putExtra("giocatore",id );
+
             }
         });
 
+        System.out.println("GameActivity: " + useramico);
         row.addView(nome);
+        row.addView(nullo);
         row.addView(accetta);
         row.addView(rifiuta);
 
