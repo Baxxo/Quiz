@@ -17,12 +17,14 @@ public class gameOver extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
-        //TextView textView = (TextView)findViewById(R.id.textView6);
+
         String punteggio = getIntent().getStringExtra("Punteggio");
         System.out.println("Punteggio dentro gameOver: " + punteggio);
         float punteggio1 = Float.parseFloat(punteggio);
+
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(punteggio1);
+
         Button button = (Button)findViewById(R.id.back);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
