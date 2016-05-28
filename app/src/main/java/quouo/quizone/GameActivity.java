@@ -96,6 +96,7 @@ public class GameActivity extends AppCompatActivity {
         linearLayout.addView(row);
     }
 
+    //gestione del tasto back
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
                 && keyCode == KeyEvent.KEYCODE_BACK
