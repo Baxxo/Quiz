@@ -98,11 +98,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/textView3" >
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/linearLayout"></LinearLayout>
+            android:id="@+id/linearLayout"></TableLayout>
     </ScrollView>
 
 </RelativeLayout>

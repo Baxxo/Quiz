@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ public class GameActivity extends AppCompatActivity {
 
     Button gioca;
     int id;
-    LinearLayout linearLayout;
+    TableLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +58,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void AggiungiSfida(String useramico, final String id) {
-        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
+        linearLayout = (TableLayout)findViewById(R.id.linearLayout);
         System.out.println("Carico partita id: " + id);
         TableRow row = new TableRow(getApplicationContext());
-        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
+        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
 
         TextView nome = new TextView(getApplicationContext());
         nome.setText(useramico);
         nome.setTextColor(Color.BLACK);
+
+        TextView nullo = new TextView(getApplicationContext());
+        nullo.setText("                    ");
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
@@ -81,6 +85,7 @@ public class GameActivity extends AppCompatActivity {
         rifiuta.setText("Rifiuta");
 
         row.addView(nome);
+        row.addView(nullo);
         row.addView(accetta);
         row.addView(rifiuta);
 
