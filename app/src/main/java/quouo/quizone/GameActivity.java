@@ -62,14 +62,14 @@ public class GameActivity extends AppCompatActivity {
     private void AggiungiSfida(String useramico, final String id) {
         linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
         System.out.println("Carico partita id: " + id);
-        TableRow row = new TableRow(getApplicationContext());
+        final TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
 
-        TextView nome = new TextView(getApplicationContext());
+        final TextView nome = new TextView(getApplicationContext());
         nome.setText(useramico);
         nome.setTextColor(Color.BLACK);
 
-        Button accetta = new Button(getApplicationContext());
+        final Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
         accetta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,12 +80,16 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Button rifiuta = new Button(getApplicationContext());
+        final Button rifiuta = new Button(getApplicationContext());
         rifiuta.setText("Rifiuta");
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                row.removeView(accetta);
+                row.removeView(nome);
+                row.removeView(rifiuta);
+                Intent intent = new Intent(getApplicationContext(), ConnectionHandler.class);
+               // Intent.putExtra("giocatore",id );
             }
         });
 
