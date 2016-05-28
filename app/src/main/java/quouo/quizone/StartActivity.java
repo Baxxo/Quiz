@@ -23,7 +23,6 @@ public class StartActivity extends AppCompatActivity {
 
     Handler handler = new Handler();
     Boolean con;
-    Boolean accesso;
     Boolean accesso1;
     Boolean accesso2;
     EditText et1;
@@ -36,7 +35,6 @@ public class StartActivity extends AppCompatActivity {
     String ris = new String();
     String nome;
     String pass;
-    String id;
     ConnectionHandler hand = new ConnectionHandler();
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -47,6 +45,14 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         setContentView(R.layout.activity_start);
+
+        et1 = (EditText) findViewById(R.id.editText);
+        et2 = (EditText) findViewById(R.id.editText2);
+        t1 = (TextView) findViewById(R.id.textView4);
+        t2 = (TextView) findViewById(R.id.textView5);
+        accedi = (Button) findViewById(R.id.button2);
+        registrati = (Button) findViewById(R.id.button3);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = preferences.edit();
 
@@ -70,7 +76,7 @@ public class StartActivity extends AppCompatActivity {
             });
         }
 
-        makeToast(preferences.getString("nome", "null") + " " + preferences.getString("pass", "null"));
+        makeToast("Login eseguito come :" + preferences.getString("nome", "null"));
 
         if (preferences.getString("nome", "null").equals("null")) {
             accesso1 = false;
@@ -87,28 +93,36 @@ public class StartActivity extends AppCompatActivity {
 
         if (accesso1 == true && accesso2 == true) {
             ris = hand.Login(nome, pass);
+
             makeToast("login " + ris);
 
             if (con == true) {
+
+                et1.setVisibility(View.INVISIBLE);
+                et2.setVisibility(View.INVISIBLE);
+                t1.setVisibility(View.INVISIBLE);
+                t2.setVisibility(View.INVISIBLE);
+                accedi.setVisibility(View.INVISIBLE);
+                registrati.setVisibility(View.INVISIBLE);
+
                 editor.putString("nome", nome);
                 editor.putString("pass", pass);
                 editor.apply();
                 progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                Player.nome = nome;
-                Player.id = Integer.valueOf(ris);
-                progress.dismiss();
-                startActivity(intent);
-                finish();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        Player.nome = nome;
+                        Player.id = Integer.valueOf(ris);
+                        progress.dismiss();
+                        startActivity(intent);
+                        finish();
+                    }
+
+                }, 1000);
             }
         }
-
-        et1 = (EditText) findViewById(R.id.editText);
-        et2 = (EditText) findViewById(R.id.editText2);
-        t1 = (TextView) findViewById(R.id.textView4);
-        t2 = (TextView) findViewById(R.id.textView5);
-        accedi = (Button) findViewById(R.id.button2);
-        registrati = (Button) findViewById(R.id.button3);
 
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,40 +135,23 @@ public class StartActivity extends AppCompatActivity {
 
                 if (ris.equals("FAILED")) {
 
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("login " + ris);
-                        }
-                    }, 1);
+                    makeToast("LOGIN " + ris + "!!!!!");
 
                 } else {
 
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("login " + ris);
-                        }
-                    }, 1);
-
                     nome = String.valueOf(et1.getText());
+
                     if (con == true) {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
                         progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                Player.nome = nome;
-                                Player.id = Integer.valueOf(ris);
-                                progress.dismiss();
-                                startActivity(intent);
-                                finish();
-                            }
-
-                        }, 1000);
+                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        Player.nome = nome;
+                        Player.id = Integer.valueOf(ris);
+                        progress.dismiss();
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }
@@ -170,28 +167,18 @@ public class StartActivity extends AppCompatActivity {
                 ris = hand.Registrazione(nome, pass);
 
                 if (ris.equals("FAILED")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("registration " + ris);
-                        }
-                    }, 1);
+
+                    makeToast("REGISTRATION " + ris + "!!!!!");
+
                 }
                 if (ris.equals("USER ALREADY EXISTS")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("registration " + ris);
-                        }
-                    }, 1);
+
+                    makeToast("User already exists!!!");
+
                 }
+
                 if (ris.equals("SUCCESS")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("registration " + ris);
-                        }
-                    }, 1);
+
                     nome = String.valueOf(et1.getText());
 
                     if (con == true) {

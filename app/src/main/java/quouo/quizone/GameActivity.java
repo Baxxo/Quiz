@@ -1,17 +1,17 @@
 package quouo.quizone;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +19,9 @@ import android.widget.Toast;
 public class GameActivity extends AppCompatActivity {
 
     Button gioca;
-    TableLayout linearLayout;
+    int id;
+    Dialog d;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +60,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void AggiungiSfida(String useramico, final String id) {
-        linearLayout = (TableLayout)findViewById(R.id.linearLayout);
+        linearLayout = (LinearLayout)findViewById(R.id.linearLayout);
         System.out.println("Carico partita id: " + id);
         TableRow row = new TableRow(getApplicationContext());
-        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
+        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
 
         TextView nome = new TextView(getApplicationContext());
         nome.setText(useramico);
         nome.setTextColor(Color.BLACK);
-
-        TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("                    ");
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
@@ -78,19 +77,61 @@ public class GameActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                 intent.putExtra("idPartita", id);
                 startActivity(intent);
-                finish();
             }
         });
 
         Button rifiuta = new Button(getApplicationContext());
         rifiuta.setText("Rifiuta");
+        rifiuta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         row.addView(nome);
-        row.addView(nullo);
         row.addView(accetta);
         row.addView(rifiuta);
 
         linearLayout.addView(row);
+    }
+
+    //gestione del tasto back
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            // Take care of calling this method on earlier versions of
+            // the platform where it doesn't exist.
+            onBackPressed();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        d = new Dialog(this);
+        d.setCancelable(true);
+        d.setContentView(R.layout.esci);
+        d.show();
+
+        Button esci = (Button) d.findViewById(R.id.esci1);
+        esci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
+
+        Button torna = (Button) d.findViewById(R.id.torna);
+        torna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        return;
     }
 
     private void makeToast(String text) {
