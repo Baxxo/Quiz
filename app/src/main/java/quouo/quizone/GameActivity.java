@@ -1,11 +1,13 @@
 package quouo.quizone;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,6 +20,7 @@ public class GameActivity extends AppCompatActivity {
 
     Button gioca;
     int id;
+    Dialog d;
     LinearLayout linearLayout;
 
     @Override
@@ -79,12 +82,55 @@ public class GameActivity extends AppCompatActivity {
 
         Button rifiuta = new Button(getApplicationContext());
         rifiuta.setText("Rifiuta");
+        rifiuta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         row.addView(nome);
         row.addView(accetta);
         row.addView(rifiuta);
 
         linearLayout.addView(row);
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            // Take care of calling this method on earlier versions of
+            // the platform where it doesn't exist.
+            onBackPressed();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        d = new Dialog(this);
+        d.setCancelable(true);
+        d.setContentView(R.layout.esci);
+        d.show();
+
+        Button esci = (Button) d.findViewById(R.id.esci1);
+        esci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
+
+        Button torna = (Button) d.findViewById(R.id.torna);
+        torna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        return;
     }
 
     private void makeToast(String text) {

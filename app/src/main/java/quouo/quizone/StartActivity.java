@@ -44,6 +44,7 @@ public class StartActivity extends AppCompatActivity {
     Button registrati;
     String user;
     Dialog d;
+    Dialog e;
     String ris;
     ConnectionHandler hand = new ConnectionHandler();
     SharedPreferences preferences;
@@ -189,14 +190,6 @@ public class StartActivity extends AppCompatActivity {
         });
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // do something on back.
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 
     private void makeToast(String text) {
         Toast.makeText(StartActivity.this, text, Toast.LENGTH_SHORT).show();
@@ -227,6 +220,43 @@ public class StartActivity extends AppCompatActivity {
 
         con = false;
         return false;
+    }
+
+    //pressione tasto indietro
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            // Take care of calling this method on earlier versions of
+            // the platform where it doesn't exist.
+            onBackPressed();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void onBackPressed() {
+        e = new Dialog(this);
+        e.setCancelable(true);
+        e.setContentView(R.layout.esci);
+        e.show();
+
+        Button esci = (Button) e.findViewById(R.id.esci1);
+        esci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
+
+        Button torna = (Button) e.findViewById(R.id.torna);
+        torna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                e.dismiss();
+            }
+        });
+        return;
     }
 
 }
