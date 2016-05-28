@@ -86,7 +86,6 @@ public class StartActivity extends AppCompatActivity {
 
         if (accesso1 == true && accesso2 == true) {
             ris = hand.Login(nome, pass);
-            progress = ProgressDialog.show(StartActivity.this, "Attendere", "accesso in corso...", true);
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -98,7 +97,7 @@ public class StartActivity extends AppCompatActivity {
                 editor.putString("nome", nome);
                 editor.putString("pass", pass);
                 editor.apply();
-                progress = ProgressDialog.show(StartActivity.this, "Attendere", "accesso in corso...", true);
+                progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -153,13 +152,14 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
-                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "accesso in corso...", true);
+                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                                 Player.nome = nome;
                                 Player.id = Integer.valueOf(ris);
+                                progress.dismiss();
                                 startActivity(intent);
                                 finish();
                             }
@@ -173,7 +173,12 @@ public class StartActivity extends AppCompatActivity {
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ris = hand.Registrazione(String.valueOf(et1.getText()), String.valueOf(et2.getText()));
+
+                nome = String.valueOf(et1.getText());
+                pass = String.valueOf(et2.getText());
+
+                ris = hand.Registrazione(nome, pass);
+
                 if (ris.equals("FAILED")) {
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -200,13 +205,21 @@ public class StartActivity extends AppCompatActivity {
                     nome = String.valueOf(et1.getText());
 
                     if (con == true) {
+                        editor.putString("nome", nome);
+                        editor.putString("pass", pass);
+                        editor.apply();
+                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                intent.putExtra("User", nome);
+                                Player.nome = nome;
+                                Player.id = Integer.valueOf(ris);
+                                progress.dismiss();
                                 startActivity(intent);
+                                finish();
                             }
+
                         }, 1000);
                     }
                 }
