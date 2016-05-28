@@ -1,6 +1,7 @@
 package quouo.quizone;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -9,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -52,8 +52,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Richieste();
-
         gioca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +63,8 @@ public class GameActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Richieste();
     }
 
     public void Richieste() {
@@ -79,7 +79,7 @@ public class GameActivity extends AppCompatActivity {
     private void AggiungiSfida(String useramico, final String id) {
         linearLayout = (TableLayout) findViewById(R.id.tableLayout);
         System.out.println("Carico partita id: " + id);
-        TableRow row = new TableRow(getApplicationContext());
+        final TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
 
         TextView nome = new TextView(getApplicationContext());
@@ -106,9 +106,10 @@ public class GameActivity extends AppCompatActivity {
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                linearLayout.removeView(row);
                 ConnectionHandler con = new ConnectionHandler();
                 String ret = con.TerminaPartita(id, Player.id);
-                Toast.makeText(getApplicationContext(), ret, Toast.LENGTH_SHORT);
+                System.out.println("Cancellazione della partita: " + ret);
             }
         });
 
@@ -119,19 +120,6 @@ public class GameActivity extends AppCompatActivity {
         row.addView(rifiuta);
 
         linearLayout.addView(row);
-    }
-
-    //gestione del tasto back
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
-                && keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            // Take care of calling this method on earlier versions of
-            // the platform where it doesn't exist.
-            onBackPressed();
-        }
-
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -145,6 +133,7 @@ public class GameActivity extends AppCompatActivity {
         esci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                d.dismiss();
                 android.os.Process.killProcess(android.os.Process.myPid());
             }
         });

@@ -1,5 +1,7 @@
 package quouo.quizone;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -91,6 +93,33 @@ public class QuizActivity extends AppCompatActivity {
 
         numeroDomanda.setText(numdomanda + "/5");
         numdomanda++;
+    }
+
+    public void onBackPressed() {
+        final Dialog d = new Dialog(this);
+        d.setCancelable(true);
+        d.setContentView(R.layout.esci);
+        d.show();
+
+        Button esci = (Button) d.findViewById(R.id.esci1);
+        esci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                d.dismiss();
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        Button torna = (Button) d.findViewById(R.id.torna);
+        torna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        return;
     }
 
 

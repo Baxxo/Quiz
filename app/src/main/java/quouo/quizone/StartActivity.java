@@ -31,14 +31,12 @@ public class StartActivity extends AppCompatActivity {
     TextView t2;
     Button accedi;
     Button registrati;
-    Dialog d;
     String ris = new String();
     String nome;
     String pass;
     ConnectionHandler hand = new ConnectionHandler();
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +54,8 @@ public class StartActivity extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = preferences.edit();
 
-        d = new Dialog(this);
-
         if (!hasConnection()) {
+            Dialog d = new Dialog(this);
             d.setTitle("Login");
             d.setCancelable(false);
             d.setContentView(R.layout.dialog);
@@ -94,37 +91,22 @@ public class StartActivity extends AppCompatActivity {
             ris = hand.Login(nome, pass);
 
             if (con == true) {
-
-                et1.setVisibility(View.INVISIBLE);
-                et2.setVisibility(View.INVISIBLE);
-                t1.setVisibility(View.INVISIBLE);
-                t2.setVisibility(View.INVISIBLE);
-                accedi.setVisibility(View.INVISIBLE);
-                registrati.setVisibility(View.INVISIBLE);
-
                 editor.putString("nome", nome);
                 editor.putString("pass", pass);
                 editor.apply();
-                progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                        Player.nome = nome;
-                        Player.id = Integer.valueOf(ris);
-                        progress.dismiss();
-                        startActivity(intent);
-                        finish();
-                    }
-
-                }, 1000);
+                ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                Player.nome = nome;
+                Player.id = Integer.valueOf(ris);
+                progress.dismiss();
+                startActivity(intent);
+                finish();
             }
         }
 
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 nome = String.valueOf(et1.getText());
                 pass = String.valueOf(et2.getText());
 
@@ -142,7 +124,7 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
-                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                        ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                         Player.nome = nome;
                         Player.id = Integer.valueOf(ris);
@@ -170,43 +152,51 @@ public class StartActivity extends AppCompatActivity {
                 }
                 if (ris.equals("USER ALREADY EXISTS")) {
 
-                    makeToast("User already exists!!!");
+                    makeToast(ris);
 
                 }
 
                 if (ris.equals("SUCCESS")) {
-
-                    nome = String.valueOf(et1.getText());
-
                     if (con == true) {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
-                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                Player.nome = nome;
-                                Player.id = Integer.valueOf(ris);
-                                progress.dismiss();
-                                startActivity(intent);
-                                finish();
-                            }
-
-                        }, 1000);
+                        ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
+                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        Player.nome = nome;
+                        Player.id = Integer.valueOf(ris);
+                        progress.dismiss();
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }
         });
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // do something on back.
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
+        final Dialog d = new Dialog(this);
+        d.setCancelable(true);
+        d.setContentView(R.layout.esci);
+        d.show();
+
+        Button esci = (Button) d.findViewById(R.id.esci1);
+        esci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
+
+        Button torna = (Button) d.findViewById(R.id.torna);
+        torna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        return;
     }
 
 
@@ -240,16 +230,5 @@ public class StartActivity extends AppCompatActivity {
         con = false;
         return false;
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Debug("Resume");
-    }
-
-    void Debug(String s) {
-        System.out.println(s);
-    }
-
 }
 

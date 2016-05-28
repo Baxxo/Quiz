@@ -1,5 +1,6 @@
 package quouo.quizone;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,6 @@ public class gameOver extends AppCompatActivity {
         setContentView(R.layout.activity_game_over);
 
         int punteggio = getIntent().getExtras().getInt("Punteggio");
-        System.out.println("Punteggio dentro gameOver: " + punteggio);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(punteggio);
@@ -28,10 +28,18 @@ public class gameOver extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                startActivity(intent);
-                finish();
+                TornaNelMenuPrincipale();
             }
         });
+    }
+
+    private void TornaNelMenuPrincipale(){
+        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onBackPressed() {
+        TornaNelMenuPrincipale();
     }
 }
