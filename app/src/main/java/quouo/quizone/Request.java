@@ -11,5 +11,5 @@ public enum Request {
     CARICAPARTITE,
     CARICANOME,
     CREAPARTITA,
-    ANNULLAPARTITA
+    ANNULLAPARTITA;
 }

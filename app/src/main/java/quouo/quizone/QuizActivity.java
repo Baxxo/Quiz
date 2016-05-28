@@ -2,6 +2,7 @@ package quouo.quizone;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Handler;
 import android.provider.Settings;
@@ -27,6 +28,7 @@ public class QuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         setContentView(R.layout.activity_quiz);
 
         ConnectionHandler connectionHandler = new ConnectionHandler();
@@ -53,7 +55,7 @@ public class QuizActivity extends AppCompatActivity {
             System.out.println("Punteggio da passare" + punteggio);
             intent.putExtra("Punteggio", punteggio);
             startActivity(intent);
-            finish();
+            this.finish();
             return;
         }
 

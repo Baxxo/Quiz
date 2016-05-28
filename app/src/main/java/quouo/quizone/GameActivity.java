@@ -22,6 +22,8 @@ public class GameActivity extends AppCompatActivity {
     Button gioca;
     int id;
     Dialog d;
+    ConnectionHandler hand = new ConnectionHandler();
+    BackgroundTask backgroundTask = new BackgroundTask();
     TableLayout linearLayout;
 
     @Override
@@ -61,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void AggiungiSfida(String useramico, final String id) {
-        linearLayout = (TableLayout)findViewById(R.id.tableLayout);
+        linearLayout = (TableLayout) findViewById(R.id.tableLayout);
         System.out.println("Carico partita id: " + id);
         TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
@@ -89,7 +91,8 @@ public class GameActivity extends AppCompatActivity {
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                backgroundTask.SetParams(new String[]{Player.nome, id});
+                backgroundTask.execute(Request.ANNULLAPARTITA);
             }
         });
 
@@ -103,7 +106,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     //gestione del tasto back
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
                 && keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
