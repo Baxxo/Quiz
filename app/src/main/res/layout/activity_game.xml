@@ -8,62 +8,54 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="quouo.quizone.GameActivity">
+    tools:context="quouo.quizone.GameActivity"
+    android:background="#6bffee">
 
-
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Nome"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:id="@+id/relativeLayout"
+        android:background="#ffffff">
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Nome"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/partite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vittorie/Partite"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_alignBottom="@+id/username"
-        android:layout_alignEnd="@+id/textView3" />
+        <TextView
+            android:id="@+id/partite"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Vittorie/Partite"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/partite"
-        android:text="             "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <Button
+            android:id="@+id/start"
+            android:layout_width="200dp"
+            android:layout_height="125dp"
+            android:background="@drawable/buttonsfida"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="Sfida!"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="41dp" />
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="200dp"
-        android:layout_height="125dp"
-        android:layout_below="@+id/textView3"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/buttonsfida"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:shadowColor="#000000"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-        android:text="Sfida!"
-        android:textColor="#FFFFFF"
-        android:textSize="40sp"
-        android:textStyle="bold" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView3"
-        android:background="#000" />
 
     <View
         android:layout_width="fill_parent"
@@ -78,7 +70,8 @@
         android:layout_height="0.5dp"
         android:layout_above="@+id/textRichieste"
         android:layout_alignParentStart="true"
-        android:background="#000" />
+        android:background="#000"
+        android:id="@+id/view2" />
 
     <TextView
         android:id="@+id/textRichieste"
@@ -96,12 +89,22 @@
         android:layout_below="@+id/view"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/textView3" >
+        android:background="#ffffff"
+        android:layout_alignParentEnd="true">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/linearLayout"></TableLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#000"
+        android:id="@+id/view3"
+        android:layout_above="@+id/start"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>
