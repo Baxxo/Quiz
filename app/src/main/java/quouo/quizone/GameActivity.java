@@ -3,6 +3,7 @@ package quouo.quizone;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 public class GameActivity extends AppCompatActivity {
 
     Button gioca;
-    int id;
     TableLayout linearLayout;
 
     @Override

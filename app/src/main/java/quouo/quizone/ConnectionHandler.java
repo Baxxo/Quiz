@@ -84,7 +84,6 @@ public class ConnectionHandler {
 
         try {
             ids = backgroundTask.execute(Request.CARICADOMANDE).get().split("<->");
-            System.out.println();
             for (int i = 0; i < 5; i++){
                 System.out.println(ids[i]);
                 backgroundTask = new BackgroundTask();

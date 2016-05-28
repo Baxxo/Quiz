@@ -84,26 +84,19 @@ public class StartActivity extends AppCompatActivity {
             accesso2 = true;
             pass = preferences.getString("pass", "null");
         }
-        if (preferences.getString("id", "null").equals("null")) {
-            accesso = false;
-        } else {
-            accesso = true;
-            id = preferences.getString("id", "null");
-        }
 
-        if (accesso1 == true && accesso2 == true && accesso == true) {
+        if (accesso1 == true && accesso2 == true) {
             ris = hand.Login(nome, pass);
             makeToast("login " + ris);
 
             if (con == true) {
                 editor.putString("nome", nome);
                 editor.putString("pass", pass);
-                editor.putString("id", id);
                 editor.apply();
                 progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                 Player.nome = nome;
-                Player.id = Integer.valueOf(id);
+                Player.id = Integer.valueOf(ris);
                 progress.dismiss();
                 startActivity(intent);
                 finish();
