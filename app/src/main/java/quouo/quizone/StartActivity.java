@@ -1,80 +1,64 @@
 package quouo.quizone;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Environment;
+import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Handler;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Date;
 
 public class StartActivity extends AppCompatActivity {
 
     Handler handler = new Handler();
     Boolean con;
-    Boolean accesso = false;
+    Boolean accesso1;
+    Boolean accesso2;
     EditText et1;
     EditText et2;
     TextView t1;
     TextView t2;
     Button accedi;
     Button registrati;
-    String user;
     Dialog d;
-    Dialog e;
-    String ris;
+    String ris = new String();
+    String nome;
+    String pass;
     ConnectionHandler hand = new ConnectionHandler();
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start);
 
-        /*preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = preferences.edit();*/
+        et1 = (EditText) findViewById(R.id.editText);
+        et2 = (EditText) findViewById(R.id.editText2);
+        t1 = (TextView) findViewById(R.id.textView4);
+        t2 = (TextView) findViewById(R.id.textView5);
+        accedi = (Button) findViewById(R.id.button2);
+        registrati = (Button) findViewById(R.id.button3);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = preferences.edit();
 
         d = new Dialog(this);
 
-        /*editor.putString("Accesso", String.valueOf(accesso));
-        editor.apply();*/
-
-        /*String acc = preferences.getString("Accesso", "false");
-        if (!acc.equalsIgnoreCase("")) {
-            acc = acc;
-        }
-        makeToast(acc);*/
-
         if (!hasConnection()) {
-            //con = false;
             d.setTitle("Login");
             d.setCancelable(false);
             d.setContentView(R.layout.dialog);
@@ -92,55 +76,81 @@ public class StartActivity extends AppCompatActivity {
             });
         }
 
+        makeToast(preferences.getString("nome", "null") + " " + preferences.getString("pass", "null"));
 
-        et1 = (EditText) findViewById(R.id.editText);
-        et2 = (EditText) findViewById(R.id.editText2);
-        t1 = (TextView) findViewById(R.id.textView4);
-        t2 = (TextView) findViewById(R.id.textView5);
-        accedi = (Button) findViewById(R.id.button2);
-        registrati = (Button) findViewById(R.id.button3);
+        if (preferences.getString("nome", "null").equals("null")) {
+            accesso1 = false;
+        } else {
+            accesso1 = true;
+            nome = preferences.getString("nome", "null");
+        }
+        if (preferences.getString("pass", "null").equals("null")) {
+            accesso2 = false;
+        } else {
+            accesso2 = true;
+            pass = preferences.getString("pass", "null");
+        }
+
+        if (accesso1 == true && accesso2 == true) {
+            ris = hand.Login(nome, pass);
+
+            makeToast("login " + ris);
+
+            if (con == true) {
+
+                et1.setVisibility(View.INVISIBLE);
+                et2.setVisibility(View.INVISIBLE);
+                t1.setVisibility(View.INVISIBLE);
+                t2.setVisibility(View.INVISIBLE);
+
+                editor.putString("nome", nome);
+                editor.putString("pass", pass);
+                editor.apply();
+                progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        Player.nome = nome;
+                        Player.id = Integer.valueOf(ris);
+                        progress.dismiss();
+                        startActivity(intent);
+                        finish();
+                    }
+
+                }, 1000);
+            }
+        }
 
         accedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if(accesso == false){
-                    accesso = true;
-                }
-                editor.putString("nome", String.valueOf(et1.getText()));
-                editor.putString("pass", String.valueOf(et2.getText()));
-                editor.apply();
-                ris = hand.Login(preferences.getString("nome", "false")  ,preferences.getString("pass", "false"));*/
-                ris = hand.Login(String.valueOf(et1.getText()), String.valueOf(et2.getText()));
+
+                nome = String.valueOf(et1.getText());
+                pass = String.valueOf(et2.getText());
+
+                ris = hand.Login(nome, pass);
+
                 if (ris.equals("FAILED")) {
 
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("login " + ris);
-                        }
-                    }, 1);
+                    makeToast("login " + ris);
 
                 } else {
 
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("login " + ris);
-                        }
-                    }, 1);
+                    makeToast("login " + ris);
 
-                    user = String.valueOf(et1.getText());
+                    nome = String.valueOf(et1.getText());
                     if (con == true) {
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                Player.nome = user;
-                                Player.id = Integer.valueOf(ris);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }, 1000);
+                        editor.putString("nome", nome);
+                        editor.putString("pass", pass);
+                        editor.apply();
+                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        Player.nome = nome;
+                        Player.id = Integer.valueOf(ris);
+                        progress.dismiss();
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }
@@ -149,45 +159,58 @@ public class StartActivity extends AppCompatActivity {
         registrati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ris = hand.Registrazione(String.valueOf(et1.getText()), String.valueOf(et2.getText()));
+
+                nome = String.valueOf(et1.getText());
+                pass = String.valueOf(et2.getText());
+
+                ris = hand.Registrazione(nome, pass);
+
                 if (ris.equals("FAILED")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("registration " + ris);
-                        }
-                    }, 1);
+
+                    makeToast("registration " + ris);
+
                 }
                 if (ris.equals("USER ALREADY EXISTS")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("registration " + ris);
-                        }
-                    }, 1);
+
+                    makeToast("registration " + ris);
+
                 }
+
                 if (ris.equals("SUCCESS")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeToast("registration " + ris);
-                        }
-                    }, 1);
-                    user = String.valueOf(et1.getText());
+
+                    makeToast("registration " + ris);
+
+                    nome = String.valueOf(et1.getText());
 
                     if (con == true) {
+                        editor.putString("nome", nome);
+                        editor.putString("pass", pass);
+                        editor.apply();
+                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                                Player.nome = user;
+                                Player.nome = nome;
+                                Player.id = Integer.valueOf(ris);
+                                progress.dismiss();
                                 startActivity(intent);
+                                finish();
                             }
+
                         }, 1000);
                     }
                 }
             }
         });
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            // do something on back.
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -222,41 +245,14 @@ public class StartActivity extends AppCompatActivity {
         return false;
     }
 
-    //pressione tasto indietro
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
-                && keyCode == KeyEvent.KEYCODE_BACK
-                && event.getRepeatCount() == 0) {
-            // Take care of calling this method on earlier versions of
-            // the platform where it doesn't exist.
-            onBackPressed();
-        }
-
-        return super.onKeyDown(keyCode, event);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Debug("Resume");
     }
 
-    public void onBackPressed() {
-        e = new Dialog(this);
-        e.setCancelable(true);
-        e.setContentView(R.layout.esci);
-        e.show();
-
-        Button esci = (Button) e.findViewById(R.id.esci1);
-        esci.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                android.os.Process.killProcess(android.os.Process.myPid());
-            }
-        });
-
-        Button torna = (Button) e.findViewById(R.id.torna);
-        torna.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                e.dismiss();
-            }
-        });
-        return;
+    void Debug(String s) {
+        System.out.println(s);
     }
 
 }

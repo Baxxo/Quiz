@@ -13,9 +13,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-/**
- * Created by Oleksandr on 20/05/2016.
- */
 
 public class BackgroundTask extends AsyncTask<Request, Void, String> {
     URL url;
@@ -56,7 +53,7 @@ public class BackgroundTask extends AsyncTask<Request, Void, String> {
                 builder.scheme("http").authority("quiz1.altervista.org")
                         .appendPath("database.php")
                         .appendQueryParameter("richiesta", "caricaDomandePartita")
-                        .appendQueryParameter("idDomanda", parametres[0]);
+                        .appendQueryParameter("id", parametres[0]);
                 break;
             case CREAPARTITA:
                 builder.scheme("http").authority("quiz1.altervista.org")
