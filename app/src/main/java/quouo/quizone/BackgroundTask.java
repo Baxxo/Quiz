@@ -1,7 +1,9 @@
 package quouo.quizone;
 
+import android.annotation.TargetApi;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -66,6 +68,13 @@ public class BackgroundTask extends AsyncTask<Request, Void, String> {
                         .appendPath("database.php")
                         .appendQueryParameter("richiesta", "caricaPartite")
                         .appendQueryParameter("idPartita", parametres[0]);
+                break;
+            case ANNULLAPARTITA:
+                builder.scheme("http").authority("quiz1.altervista.org")
+                        .appendPath("database.php")
+                        .appendQueryParameter("richiesta", "terminaPartita")
+                        .appendQueryParameter("idP", parametres[0])
+                        .appendQueryParameter("nomeUser", parametres[1]);
                 break;
         }
 
