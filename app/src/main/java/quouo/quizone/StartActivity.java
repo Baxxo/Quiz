@@ -162,18 +162,18 @@ public class StartActivity extends AppCompatActivity {
                     }
 
                     if (ris.equals("SUCCESS")) {
-                        if (con == true) {
-                            editor.putString("nome", nome);
-                            editor.putString("pass", pass);
-                            editor.apply();
-                            ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
-                            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                            Player.nome = nome;
-                            Player.id = Integer.valueOf(ris);
-                            progress.dismiss();
-                            startActivity(intent);
-                            finish();
-                        }
+                        editor.putString("nome", nome);
+                        editor.putString("pass", pass);
+                        editor.apply();
+                        ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
+                        ris = hand.Login(nome, pass);
+                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        Player.nome = nome;
+                        Player.id = Integer.valueOf(ris);
+                        progress.dismiss();
+                        startActivity(intent);
+                        finish();
+                        makeToast("Il tuo nome e': " + nome + "\nIl tuo password e': " + pass);
                     }
                 } else {
                     makeToast("Non c'e' internet");
