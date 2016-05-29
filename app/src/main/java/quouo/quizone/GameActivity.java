@@ -1,7 +1,6 @@
 package quouo.quizone;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -40,6 +39,26 @@ public class GameActivity extends AppCompatActivity {
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
 
+        if(!Functions.hasConnection(getApplicationContext())){
+            d = new Dialog(this);
+            d.setTitle("Non c'e' internet");
+            d.setCancelable(false);
+            d.setContentView(R.layout.dialog);
+            d.show();
+
+            Button b = (Button) d.findViewById(R.id.button);
+
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    d.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+            });
+        }
+
         TextView logOut = (TextView)findViewById(R.id.textView3);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,12 +74,16 @@ public class GameActivity extends AppCompatActivity {
         gioca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionHandler con = new ConnectionHandler();
-                String id = con.CreaPartita(Player.id);
-                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-                intent.putExtra("idPartita", id);
-                startActivity(intent);
-                finish();
+                if(Functions.hasConnection(getApplicationContext())) {
+                    ConnectionHandler con = new ConnectionHandler();
+                    String id = con.CreaPartita(Player.id);
+                    Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                    intent.putExtra("idPartita", id);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    makeToast("Non c'e' internet");
+                }
             }
         });
 
@@ -94,10 +117,14 @@ public class GameActivity extends AppCompatActivity {
         accetta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-                intent.putExtra("idPartita", id);
-                startActivity(intent);
-                finish();
+                if(Functions.hasConnection(getApplicationContext())) {
+                    Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+                    intent.putExtra("idPartita", id);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    makeToast("Non c'e' internet");
+                }
             }
         });
 
@@ -106,14 +133,17 @@ public class GameActivity extends AppCompatActivity {
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                linearLayout.removeView(row);
-                ConnectionHandler con = new ConnectionHandler();
-                String ret = con.TerminaPartita(id, Player.id);
-                System.out.println("Cancellazione della partita: " + ret);
+                if(Functions.hasConnection(getApplicationContext())) {
+                    linearLayout.removeView(row);
+                    ConnectionHandler con = new ConnectionHandler();
+                    String ret = con.TerminaPartita(id, Player.id);
+                    System.out.println("Cancellazione della partita: " + ret);
+                } else {
+                    makeToast("Non c'e' internet");
+                }
             }
         });
 
-        System.out.println("GameActivity: " + useramico);
         row.addView(nome);
         row.addView(nullo);
         row.addView(accetta);

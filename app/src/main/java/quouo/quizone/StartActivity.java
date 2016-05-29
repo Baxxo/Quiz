@@ -31,9 +31,7 @@ public class StartActivity extends AppCompatActivity {
     TextView t2;
     Button accedi;
     Button registrati;
-    ProgressDialog progress;
     Dialog d;
-    String ris = new String();
     String nome;
     String pass;
     ConnectionHandler hand = new ConnectionHandler();
@@ -68,13 +66,14 @@ public class StartActivity extends AppCompatActivity {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = getIntent();
+                    d.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                     finish();
                     startActivity(intent);
                 }
             });
+            return;
         }
-        con = true;
 
 
         if (preferences.getString("nome", "null").equals("null")) {
@@ -90,21 +89,20 @@ public class StartActivity extends AppCompatActivity {
             pass = preferences.getString("pass", "null");
         }
 
-        if (accesso1 == true && accesso2 == true) {
-            ris = hand.Login(nome, pass);
+        if (accesso1 == true && accesso2 == true && Functions.hasConnection(this)) {
 
-            if (con == true) {
-                editor.putString("nome", nome);
-                editor.putString("pass", pass);
-                editor.apply();
-                progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                Player.nome = nome;
-                Player.id = Integer.valueOf(ris);
-                progress.dismiss();
-                startActivity(intent);
-                finish();
-            }
+            editor.putString("nome", nome);
+            editor.putString("pass", pass);
+            editor.apply();
+            ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+            String ris = hand.Login(nome, pass);
+            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+            Player.nome = nome;
+            Player.id = Integer.valueOf(ris);
+            progress.dismiss();
+            startActivity(intent);
+            finish();
+
         }
 
         accedi.setOnClickListener(new View.OnClickListener() {
@@ -113,21 +111,21 @@ public class StartActivity extends AppCompatActivity {
                 nome = String.valueOf(et1.getText());
                 pass = String.valueOf(et2.getText());
 
-                ris = hand.Login(nome, pass);
+                if(Functions.hasConnection(getApplicationContext())){
+                    String ris = hand.Login(nome, pass);
 
-                if (ris.equals("FAILED")) {
+                    if (ris.equals("FAILED")) {
 
-                    makeToast("LOGIN " + ris + "!!!!!");
+                        makeToast("LOGIN " + ris + "!!!!!");
 
-                } else {
+                    } else {
 
-                    nome = String.valueOf(et1.getText());
+                        nome = String.valueOf(et1.getText());
 
-                    if (con == true) {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
-                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                        ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                         Player.nome = nome;
                         Player.id = Integer.valueOf(ris);
@@ -135,6 +133,8 @@ public class StartActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
+                } else {
+                    makeToast("Non c'e' internet");
                 }
             }
         });
@@ -146,32 +146,37 @@ public class StartActivity extends AppCompatActivity {
                 nome = String.valueOf(et1.getText());
                 pass = String.valueOf(et2.getText());
 
-                ris = hand.Registrazione(nome, pass);
+                if (Functions.hasConnection(getApplicationContext())) {
 
-                if (ris.equals("FAILED")) {
+                    String ris = hand.Registrazione(nome, pass);
 
-                    makeToast("REGISTRATION " + ris + "!!!!!");
+                    if (ris.equals("FAILED")) {
 
-                }
-                if (ris.equals("USER ALREADY EXISTS")) {
+                        makeToast("REGISTRATION " + ris + "!!!!!");
 
-                    makeToast(ris);
-
-                }
-
-                if (ris.equals("SUCCESS")) {
-                    if (con == true) {
-                        editor.putString("nome", nome);
-                        editor.putString("pass", pass);
-                        editor.apply();
-                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
-                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                        Player.nome = nome;
-                        Player.id = Integer.valueOf(ris);
-                        progress.dismiss();
-                        startActivity(intent);
-                        finish();
                     }
+                    if (ris.equals("USER ALREADY EXISTS")) {
+
+                        makeToast(ris);
+
+                    }
+
+                    if (ris.equals("SUCCESS")) {
+                        if (con == true) {
+                            editor.putString("nome", nome);
+                            editor.putString("pass", pass);
+                            editor.apply();
+                            ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
+                            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                            Player.nome = nome;
+                            Player.id = Integer.valueOf(ris);
+                            progress.dismiss();
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                } else {
+                    makeToast("Non c'e' internet");
                 }
             }
         });

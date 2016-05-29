@@ -57,11 +57,28 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
 
     private void ImpostaDomanda(final int index){
         if(index > 4){
-            Intent intent = new Intent(getApplicationContext(), gameOver.class);
-            System.out.println("Punteggio da passare" + punteggio);
-            intent.putExtra("Punteggio", punteggio);
-            startActivity(intent);
-            this.finish();
+            if(!Functions.hasConnection(getApplicationContext())){
+                final Dialog d = new Dialog(this);
+                d.setTitle("Non c'e' internet");
+                d.setCancelable(false);
+                d.setContentView(R.layout.dialog);
+                d.show();
+
+                Button b = (Button) d.findViewById(R.id.button);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(Functions.hasConnection(getApplicationContext())){
+                            LoadFine();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Non c'e' internet", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            } else {
+                LoadFine();
+            }
             return;
         }
         if(timer != null)
@@ -155,9 +172,12 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         return;
     }
 
-
-    private void makeToast(String text) {
-        Toast.makeText(QuizActivity.this, text, Toast.LENGTH_SHORT).show();
+    private void LoadFine(){
+        Intent intent = new Intent(getApplicationContext(), gameOver.class);
+        System.out.println("Punteggio da passare" + punteggio);
+        intent.putExtra("Punteggio", punteggio);
+        startActivity(intent);
+        this.finish();
     }
 
     @Override
