@@ -31,6 +31,8 @@ public class StartActivity extends AppCompatActivity {
     TextView t2;
     Button accedi;
     Button registrati;
+    ProgressDialog progress;
+    Dialog d;
     String ris = new String();
     String nome;
     String pass;
@@ -54,8 +56,8 @@ public class StartActivity extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = preferences.edit();
 
-        if (!hasConnection()) {
-            Dialog d = new Dialog(this);
+        if (!Functions.hasConnection(this)) {
+            d = new Dialog(this);
             d.setTitle("Login");
             d.setCancelable(false);
             d.setContentView(R.layout.dialog);
@@ -72,6 +74,7 @@ public class StartActivity extends AppCompatActivity {
                 }
             });
         }
+        con = true;
 
 
         if (preferences.getString("nome", "null").equals("null")) {
@@ -94,7 +97,7 @@ public class StartActivity extends AppCompatActivity {
                 editor.putString("nome", nome);
                 editor.putString("pass", pass);
                 editor.apply();
-                ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                 Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                 Player.nome = nome;
                 Player.id = Integer.valueOf(ris);
@@ -124,7 +127,7 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
-                        ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                         Player.nome = nome;
                         Player.id = Integer.valueOf(ris);
@@ -161,7 +164,7 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
-                        ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
+                        progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
                         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                         Player.nome = nome;
                         Player.id = Integer.valueOf(ris);
@@ -175,7 +178,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        final Dialog d = new Dialog(this);
+        d = new Dialog(this);
         d.setCancelable(true);
         d.setContentView(R.layout.esci);
         d.show();
@@ -199,36 +202,8 @@ public class StartActivity extends AppCompatActivity {
         return;
     }
 
-
     private void makeToast(String text) {
         Toast.makeText(StartActivity.this, text, Toast.LENGTH_SHORT).show();
-    }
-
-    public boolean hasConnection() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-
-        NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetwork != null && wifiNetwork.isConnected()) {
-            con = true;
-            return true;
-        }
-
-        NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (mobileNetwork != null && mobileNetwork.isConnected()) {
-            con = true;
-            return true;
-        }
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            con = true;
-            return true;
-        }
-
-        con = false;
-        return false;
     }
 }
 

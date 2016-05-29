@@ -82,9 +82,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:id="@+id/spazio1"
+            android:id="@+id/timerQuiz"
             android:layout_gravity="center_horizontal"
-            android:text="00:00" />
+            android:text="12" />
 
         <Button
             android:layout_width="320dp"

@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity implements ITimer {
 
     Domanda[] domande = new Domanda[5];
     Button[] buttons = new Button[4];
@@ -24,8 +24,11 @@ public class QuizActivity extends AppCompatActivity {
     TextView numeroDomanda;
     TextView nome1;
     TextView nome2;
+    TextView timerText;
     boolean canPlay;
-    int numdomanda = 1;
+    int numdomanda = 0;
+
+    Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class QuizActivity extends AppCompatActivity {
         domande = connectionHandler.domande(getIntent().getStringExtra("idPartita"));
         nome1 = (TextView)findViewById(R.id.nome1);
         nome2 = (TextView)findViewById(R.id.nome2);
+        timerText = (TextView)findViewById(R.id.timerQuiz);
 
         numeroDomanda = (TextView)findViewById(R.id.numeroDomanda);
         domanda = (TextView)findViewById(R.id.Domanda);
@@ -48,7 +52,7 @@ public class QuizActivity extends AppCompatActivity {
 
         nome1.setText(Player.nome);
         nome2.setText("avversario");
-        ImpostaDomanda(0);
+        ImpostaDomanda(numdomanda);
     }
 
     private void ImpostaDomanda(final int index){
@@ -60,9 +64,14 @@ public class QuizActivity extends AppCompatActivity {
             this.finish();
             return;
         }
+        if(timer != null)
+            timer.stop = true;
+        timer = new Timer(this, 10);
+        timer.start();
 
         canPlay = true;
         domanda.setText(domande[index].getTesto());
+        timerText.setTextColor(Color.BLACK);
 
         for (int i = 0; i < 4; i++){
             buttons[i].setText(domande[index].getRisposta(i).getTesto());
@@ -83,7 +92,8 @@ public class QuizActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                ImpostaDomanda(index + 1);
+                                numdomanda++;
+                                ImpostaDomanda(numdomanda);
                             }
                         }, 200);
                     }
@@ -91,8 +101,31 @@ public class QuizActivity extends AppCompatActivity {
             });
         }
 
-        numeroDomanda.setText(numdomanda + "/5");
-        numdomanda++;
+        numeroDomanda.setText((numdomanda + 1) + "/5");
+    }
+
+    @Override
+    public void OnTimeChange(final int seconds) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(seconds == 3){
+                    timerText.setTextColor(Color.RED);
+                }
+                timerText.setText(String.valueOf(seconds));
+            }
+        });
+    }
+
+    @Override
+    public void OnTimeOver(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                numdomanda++;
+                ImpostaDomanda(numdomanda);
+            }
+        });
     }
 
     public void onBackPressed() {
@@ -127,4 +160,17 @@ public class QuizActivity extends AppCompatActivity {
         Toast.makeText(QuizActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(timer != null)
+            timer.stop = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(timer != null)
+            timer.stop = true;
+    }
 }
