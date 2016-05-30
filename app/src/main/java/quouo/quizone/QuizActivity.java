@@ -28,6 +28,8 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
     boolean canPlay;
     int numdomanda = 0;
 
+    Handler handler = new Handler();
+
     Timer timer;
 
     @Override
@@ -83,17 +85,17 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
                         if (domande[index].getRisposta(temp).isGiusto()) {
                             punteggio++;
                             buttons[temp].setBackgroundColor(Color.GREEN);
+
                         } else {
                             buttons[temp].setBackgroundColor(Color.RED);
                         }
-                        Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 numdomanda++;
                                 ImpostaDomanda(numdomanda);
                             }
-                        }, 200);
+                        }, 500);
                     }
                 }
             });

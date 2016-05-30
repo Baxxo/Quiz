@@ -109,6 +109,19 @@ public class StartActivity extends AppCompatActivity {
                 progress.dismiss();
             }
 
+            ris = hand.Login(nome, pass);
+            final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+            Player.nome = nome;
+            ris = "3";
+            Player.id = Integer.valueOf(ris);
+            progress.dismiss();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(intent);
+                }
+            }, 500);
+            finish();
         }
 
         accedi.setOnClickListener(new View.OnClickListener() {

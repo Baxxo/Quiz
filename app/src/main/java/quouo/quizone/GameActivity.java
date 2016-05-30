@@ -153,6 +153,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(Functions.hasConnection(getApplicationContext())) {
+                    linearLayout.removeView(row);
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                     intent.putExtra("idPartita", richiesta.getIdRichiesta());
                     intent.putExtra("avversario", richiesta.getNemico());
