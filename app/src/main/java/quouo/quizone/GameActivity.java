@@ -99,7 +99,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void AggiungiSfida(String useramico, final String id) {
+    private void AggiungiSfida(final String useramico, final String id) {
         linearLayout = (TableLayout) findViewById(R.id.tableLayout);
         System.out.println("Carico partita id: " + id);
         final TableRow row = new TableRow(getApplicationContext());
@@ -120,6 +120,7 @@ public class GameActivity extends AppCompatActivity {
                 if(Functions.hasConnection(getApplicationContext())) {
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                     intent.putExtra("idPartita", id);
+                    intent.putExtra("avversario", useramico);
                     startActivity(intent);
                     finish();
                 } else {

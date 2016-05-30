@@ -89,6 +89,22 @@ public class ConnectionHandler {
         return ret;
     }
 
+    public String InviaPunteggio(int idUser, String idPartita, int punteggio ){
+        String ret = "FAILED";
+        backgroundTask = new BackgroundTask();
+        backgroundTask.SetParams(new String[]{ idPartita, String.valueOf(punteggio), String.valueOf(idUser) });
+
+        try {
+            ret = backgroundTask.execute(Request.INVIAPUNTEGGIO).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
+
     public Domanda[] domande(String idPartita){
         backgroundTask = new BackgroundTask();
         Domanda[] domande = new Domanda[5];

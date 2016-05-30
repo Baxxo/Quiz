@@ -24,7 +24,7 @@
         android:id="@+id/partite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vittorie/Partite"
+        android:text="Vin/Par/Per"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_alignBottom="@+id/username"
         android:layout_alignEnd="@+id/textRichieste" />

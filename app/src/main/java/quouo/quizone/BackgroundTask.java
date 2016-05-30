@@ -76,6 +76,14 @@ public class BackgroundTask extends AsyncTask<Request, Void, String> {
                         .appendQueryParameter("idP", parametres[0])
                         .appendQueryParameter("idUser", parametres[1]);
                 break;
+            case INVIAPUNTEGGIO:
+                builder.scheme("http").authority("quiz1.altervista.org")
+                        .appendPath("database.php")
+                        .appendQueryParameter("richiesta", "aggiornaPartita")
+                        .appendQueryParameter("idPartita", parametres[0])
+                        .appendQueryParameter("punteggio", parametres[1])
+                        .appendQueryParameter("idUser", parametres[2]);
+                break;
         }
 
         try {

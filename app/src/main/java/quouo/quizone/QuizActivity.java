@@ -51,40 +51,21 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         buttons[3] = (Button)findViewById(R.id.risposta4);
 
         nome1.setText(Player.nome);
-        nome2.setText("avversario");
+        //nome2.setText(getIntent().getStringExtra("avversario"));
         ImpostaDomanda(numdomanda);
     }
 
     private void ImpostaDomanda(final int index){
         if(index > 4){
             if(!Functions.hasConnection(getApplicationContext())){
-                final Dialog d = new Dialog(this);
-                d.setTitle("Non c'e' internet");
-                d.setCancelable(false);
-                d.setContentView(R.layout.dialog);
-                d.show();
-
-                Button b = (Button) d.findViewById(R.id.button);
-
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(Functions.hasConnection(getApplicationContext())){
-                            LoadFine();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Non c'e' internet", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                NotConnectionDialog();
             } else {
                 LoadFine();
             }
             return;
         }
-        if(timer != null)
-            timer.stop = true;
-        timer = new Timer(this, 10);
-        timer.start();
+
+        StartTimer();
 
         canPlay = true;
         domanda.setText(domande[index].getTesto());
@@ -92,7 +73,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
 
         for (int i = 0; i < 4; i++){
             buttons[i].setText(domande[index].getRisposta(i).getTesto());
-            buttons[i].setBackgroundColor(Color.rgb(229,208,255));
+            buttons[i].setBackgroundColor(Color.WHITE);
             final int temp = i;
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,6 +100,34 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         }
 
         numeroDomanda.setText((numdomanda + 1) + "/5");
+    }
+
+    private void StartTimer(){
+        if(timer != null)
+            timer.stop = true;
+        timer = new Timer(this, 10);
+        timer.start();
+    }
+
+    private void NotConnectionDialog(){
+        final Dialog d = new Dialog(this);
+        d.setTitle("Non c'e' internet");
+        d.setCancelable(false);
+        d.setContentView(R.layout.dialog);
+        d.show();
+
+        Button b = (Button) d.findViewById(R.id.button);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Functions.hasConnection(getApplicationContext())){
+                    LoadFine();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Non c'e' internet", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -173,6 +182,11 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
     }
 
     private void LoadFine(){
+        ConnectionHandler con = new ConnectionHandler();
+        String ret = con.InviaPunteggio(Player.id, getIntent().getStringExtra("idPartita"), punteggio);
+        if(ret == "FAILED"){
+            Toast.makeText(getApplicationContext(), "FAILED INVIA PUNTEGGIO", Toast.LENGTH_SHORT);
+        }
         Intent intent = new Intent(getApplicationContext(), gameOver.class);
         System.out.println("Punteggio da passare" + punteggio);
         intent.putExtra("Punteggio", punteggio);
