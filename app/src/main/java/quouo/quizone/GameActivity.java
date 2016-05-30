@@ -25,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
     ConnectionHandler hand = new ConnectionHandler();
     BackgroundTask backgroundTask = new BackgroundTask();
     TableLayout linearLayout;
+    Richieste[] richieste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,25 +93,59 @@ public class GameActivity extends AppCompatActivity {
 
     public void Richieste() {
         ConnectionHandler con = new ConnectionHandler();
-        String[] carica = con.CaricaPartite(Player.id).split("<->");
+        //String[] carica = con.CaricaPartite(Player.id).split("<->");
+        richieste = con.CaricaRichieste(Player.id);
 
-        for (int i = 0; i < carica.length - 1; i += 2) {
+        /*for (int i = 0; i < carica.length - 1; i += 2) {
             AggiungiSfida(carica[i + 1], carica[i]);
+        }*/
+
+        for(int i = 0; i < richieste.length; i++){
+            Functions.Debug("Aggiungo richieste: " + i);
+            if(richieste[i].stato == StatoRichiesta.DAFARE)
+                AggiungiRichiestaDaFare(richieste[i]);
+            if(richieste[i].stato == StatoRichiesta.ASPETTA)
+                AggiungiRichiestaAspetta(richieste[i]);
+            if(richieste[i].stato == StatoRichiesta.NONVALIDA)
+                makeToast("Partita non valida");
         }
     }
 
-    private void AggiungiSfida(final String useramico, final String id) {
+    private void AggiungiRichiestaAspetta(final Richieste richiesta) {
         linearLayout = (TableLayout) findViewById(R.id.tableLayout);
-        System.out.println("Carico partita id: " + id);
+        System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
         final TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
 
         TextView nome = new TextView(getApplicationContext());
-        nome.setText(useramico);
+        nome.setText(richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("          ");
+        nullo.setText("               ");
+
+        TextView asp = new TextView(getApplicationContext());
+        asp.setText("Attesa dell'avversario");
+
+        row.addView(nome);
+        row.addView(nullo);
+        row.addView(asp);
+
+        linearLayout.addView(row);
+    }
+
+    private void AggiungiRichiestaDaFare(final Richieste richiesta) {
+        linearLayout = (TableLayout) findViewById(R.id.tableLayout);
+        System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
+        final TableRow row = new TableRow(getApplicationContext());
+        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
+
+        TextView nome = new TextView(getApplicationContext());
+        nome.setText(richiesta.getNemico());
+        nome.setTextColor(Color.BLACK);
+
+        TextView nullo = new TextView(getApplicationContext());
+        nullo.setText("               ");
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
@@ -119,8 +154,8 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(Functions.hasConnection(getApplicationContext())) {
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-                    intent.putExtra("idPartita", id);
-                    intent.putExtra("avversario", useramico);
+                    intent.putExtra("idPartita", richiesta.getIdRichiesta());
+                    intent.putExtra("avversario", richiesta.getNemico());
                     startActivity(intent);
                     finish();
                 } else {
@@ -137,7 +172,7 @@ public class GameActivity extends AppCompatActivity {
                 if(Functions.hasConnection(getApplicationContext())) {
                     linearLayout.removeView(row);
                     ConnectionHandler con = new ConnectionHandler();
-                    String ret = con.TerminaPartita(id, Player.id);
+                    String ret = con.TerminaPartita(richiesta.getIdRichiesta(), Player.id);
                     System.out.println("Cancellazione della partita: " + ret);
                 } else {
                     makeToast("Non c'e' internet");

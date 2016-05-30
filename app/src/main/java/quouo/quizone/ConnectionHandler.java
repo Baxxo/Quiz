@@ -41,6 +41,35 @@ public class ConnectionHandler {
         return ret;
     }
 
+    public Richieste[] CaricaRichieste(int id){
+        Richieste[] temp = new Richieste[0];
+
+        backgroundTask = new BackgroundTask();
+        backgroundTask.SetParams(new String[] {String.valueOf(id)});
+
+        String[] s = new String[0];
+        try {
+            s = backgroundTask.execute(Request.CARICAPARTITE).get().split("<->");
+            System.out.println(temp);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        temp = new Richieste[s.length / 5];
+        Functions.Debug("Richieste: " + (s.length / 5));
+        Functions.Debug("Stringe: " + s.length);
+        int index = 0;
+        for(int i = 0; i < temp.length; i++){
+            temp[i] = new Richieste(new String[] { s[index], s[index+1], s[index+2], s[index+3], s[index+4] });
+            Functions.Debug(temp[i].toString());
+            index += 5;
+        }
+        Functions.Debug("Caricate richieste: " + temp.length);
+        return temp;
+    }
+
     public String CaricaPartite(int id){
         backgroundTask = new BackgroundTask();
         backgroundTask.SetParams(new String[] {String.valueOf(id)});

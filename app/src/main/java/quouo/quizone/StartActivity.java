@@ -96,18 +96,18 @@ public class StartActivity extends AppCompatActivity {
             editor.putString("pass", pass);
             editor.apply();
             ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-            String ris = hand.Login(nome, pass);
-            final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-            Player.nome = nome;
-            Player.id = Integer.valueOf(ris);
-            progress.dismiss();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(intent);
-                }
-            }, 500);
-            finish();
+            try{
+                String ris = hand.Login(nome, pass);
+                final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                Player.nome = nome;
+                Player.id = Integer.valueOf(ris);
+                progress.dismiss();
+                startActivity(intent);
+                finish();
+            } catch (Exception e){
+                makeToast("C'e' qualcosa che non va");
+                progress.dismiss();
+            }
 
         }
 
@@ -131,18 +131,21 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
                         editor.apply();
-                        ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                        final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                        Player.nome = nome;
-                        Player.id = Integer.valueOf(ris);
-                        progress.dismiss();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                startActivity(intent);
-                            }
-                        }, 500);
-                        finish();
+
+
+                        ProgressDialog progressd = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
+                        try{
+                            final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                            Player.nome = nome;
+                            Player.id = Integer.valueOf(ris);
+                            progressd.dismiss();
+                            startActivity(intent);
+                            finish();
+                        } catch (Exception e){
+                            progressd.dismiss();
+                            makeToast("C'e' qualcosa che non va");
+                        }
+
                     }
                 } else {
                     makeToast("Non c'e' internet");

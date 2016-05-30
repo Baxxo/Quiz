@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".SplashScreen"
+            android:name=".StartActivity"
             android:noHistory="true">
             <intent-filter>
                 <action
@@ -24,9 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".StartActivity"
-            android:noHistory="true" />
         <activity android:name=".GameActivity" />
 
         <activity android:name=".QuizActivity" />
