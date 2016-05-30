@@ -22,8 +22,6 @@ public class SplashScreen extends Activity {
         final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
         progressBar.setMax(1500);
 
-        final ImageView imageView = (ImageView) findViewById(R.id.spaceshipImage);
-
         Thread timerThread = new Thread(){
             public void run(){
                 for(i=0;i<1500;i+=10){
