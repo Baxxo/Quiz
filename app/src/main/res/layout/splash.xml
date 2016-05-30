@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
+        android:id="@+id/spaceshipImage"
         android:layout_marginTop="37dp"
         android:background="@drawable/icon"
         android:layout_alignParentTop="true"
@@ -19,21 +19,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
         android:layout_marginBottom="106dp"
-        android:indeterminate="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageView2"
-        android:layout_alignEnd="@+id/imageView2"
+        android:layout_alignStart="@+id/spaceshipImage"
+        android:layout_alignEnd="@+id/spaceshipImage"
         android:layout_marginTop="147dp"
-        android:layout_below="@+id/imageView2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/textView6"
-        android:layout_marginBottom="58dp"
-        android:layout_alignBottom="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:text="acsasdc" />
+        android:layout_below="@+id/spaceshipImage" />
 
 </RelativeLayout>

@@ -96,7 +96,7 @@ public class StartActivity extends AppCompatActivity {
             editor.putString("pass", pass);
             editor.apply();
             ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-            String ris = hand.Login(nome, pass);
+            ris = hand.Login(nome, pass);
             final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
             Player.nome = nome;
             Player.id = Integer.valueOf(ris);
