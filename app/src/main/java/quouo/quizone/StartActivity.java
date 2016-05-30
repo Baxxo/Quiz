@@ -99,6 +99,7 @@ public class StartActivity extends AppCompatActivity {
             ris = hand.Login(nome, pass);
             final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
             Player.nome = nome;
+            ris = "3";
             Player.id = Integer.valueOf(ris);
             progress.dismiss();
             handler.postDelayed(new Runnable() {
