@@ -34,6 +34,7 @@ public class StartActivity extends AppCompatActivity {
     Dialog d;
     String nome;
     String pass;
+    String ris;
     ConnectionHandler hand = new ConnectionHandler();
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -96,11 +97,16 @@ public class StartActivity extends AppCompatActivity {
             editor.apply();
             ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
             String ris = hand.Login(nome, pass);
-            Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+            final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
             Player.nome = nome;
             Player.id = Integer.valueOf(ris);
             progress.dismiss();
-            startActivity(intent);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(intent);
+                }
+            }, 500);
             finish();
 
         }
@@ -111,8 +117,8 @@ public class StartActivity extends AppCompatActivity {
                 nome = String.valueOf(et1.getText());
                 pass = String.valueOf(et2.getText());
 
-                if(Functions.hasConnection(getApplicationContext())){
-                    String ris = hand.Login(nome, pass);
+                if (Functions.hasConnection(getApplicationContext())) {
+                    ris = hand.Login(nome, pass);
 
                     if (ris.equals("FAILED")) {
 
@@ -126,11 +132,16 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("pass", pass);
                         editor.apply();
                         ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
                         Player.nome = nome;
                         Player.id = Integer.valueOf(ris);
                         progress.dismiss();
-                        startActivity(intent);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(intent);
+                            }
+                        }, 500);
                         finish();
                     }
                 } else {
@@ -146,9 +157,18 @@ public class StartActivity extends AppCompatActivity {
                 nome = String.valueOf(et1.getText());
                 pass = String.valueOf(et2.getText());
 
+                if (nome.length() < 5 || pass.length() < 5) {
+                    makeToast("il nome o la password devono contenere almeno 5 caratteri");
+                    ris = "FAILED";
+                }
+
                 if (Functions.hasConnection(getApplicationContext())) {
 
-                    String ris = hand.Registrazione(nome, pass);
+                    if (ris.equals("FAILED") == true) {
+                        makeToast("REGISTRATION " + ris + "!!!!!");
+                    } else {
+                        ris = hand.Registrazione(nome, pass);
+                    }
 
                     if (ris.equals("FAILED")) {
 
