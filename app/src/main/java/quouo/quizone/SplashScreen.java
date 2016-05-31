@@ -32,18 +32,12 @@ public class SplashScreen extends Activity {
                         e.printStackTrace();
                     }
                 }
-                Intent intent = new Intent(SplashScreen.this,StartActivity.class);
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                 startActivity(intent);
+                finish();
             }
         };
         timerThread.start();
-    }
-
-    @Override
-    protected void onPause() {
-        // TODO Auto-generated method stub
-        super.onPause();
-        finish();
     }
 
 }

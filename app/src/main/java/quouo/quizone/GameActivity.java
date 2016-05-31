@@ -93,25 +93,29 @@ public class GameActivity extends AppCompatActivity {
 
     public void Richieste() {
         ConnectionHandler con = new ConnectionHandler();
-        //String[] carica = con.CaricaPartite(Player.id).split("<->");
         richieste = con.CaricaRichieste(Player.id);
-
-        /*for (int i = 0; i < carica.length - 1; i += 2) {
-            AggiungiSfida(carica[i + 1], carica[i]);
-        }*/
 
         for(int i = 0; i < richieste.length; i++){
             Functions.Debug("Aggiungo richieste: " + i);
-            if(richieste[i].stato == StatoRichiesta.DAFARE)
-                AggiungiRichiestaDaFare(richieste[i]);
-            if(richieste[i].stato == StatoRichiesta.ASPETTA)
-                AggiungiRichiestaAspetta(richieste[i]);
-            if(richieste[i].stato == StatoRichiesta.NONVALIDA)
-                makeToast("Partita non valida");
+
+            switch (richieste[i].stato){
+                case DAFARE:
+                    AggiungiRichiestaDaFare(richieste[i]);
+                    break;
+                case ASPETTA:
+                    AggiungiRichiestaAspetta(richieste[i], "Turno dell'avversario");
+                    break;
+                case FINITA:
+                    AggiungiRichiestaAspetta(richieste[i], richieste[i].risultato());
+                    break;
+                case NONVALIDA:
+                    makeToast("Partita non valida");
+                    break;
+            }
         }
     }
 
-    private void AggiungiRichiestaAspetta(final Richieste richiesta) {
+    private void AggiungiRichiestaAspetta(final Richieste richiesta, final String testo) {
         linearLayout = (TableLayout) findViewById(R.id.tableLayout);
         System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
         final TableRow row = new TableRow(getApplicationContext());
@@ -122,14 +126,15 @@ public class GameActivity extends AppCompatActivity {
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("               ");
+        nullo.setText("        ");
 
-        TextView asp = new TextView(getApplicationContext());
-        asp.setText("Attesa dell'avversario");
+        TextView txt = new TextView(getApplicationContext());
+        txt.setText(testo);
+        txt.setTextColor(Color.BLACK);
 
         row.addView(nome);
         row.addView(nullo);
-        row.addView(asp);
+        row.addView(txt);
 
         linearLayout.addView(row);
     }
@@ -145,7 +150,7 @@ public class GameActivity extends AppCompatActivity {
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("               ");
+        nullo.setText("        ");
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
@@ -166,7 +171,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         Button rifiuta = new Button(getApplicationContext());
-        rifiuta.setText("Rifiuta");
+        rifiuta.setText("Arrenderti");
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

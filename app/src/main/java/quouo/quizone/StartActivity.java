@@ -21,36 +21,27 @@ import android.widget.Toast;
 
 public class StartActivity extends AppCompatActivity {
 
-    Handler handler = new Handler();
-    Boolean con;
     Boolean accesso1;
     Boolean accesso2;
-    EditText et1;
-    EditText et2;
-    TextView t1;
-    TextView t2;
-    Button accedi;
-    Button registrati;
     Dialog d;
     String nome;
     String pass;
-    String ris;
-    ConnectionHandler hand = new ConnectionHandler();
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         setContentView(R.layout.activity_start);
 
-        et1 = (EditText) findViewById(R.id.editText);
-        et2 = (EditText) findViewById(R.id.editText2);
-        t1 = (TextView) findViewById(R.id.textView4);
-        t2 = (TextView) findViewById(R.id.textView5);
-        accedi = (Button) findViewById(R.id.button2);
-        registrati = (Button) findViewById(R.id.button3);
+        final EditText et1 = (EditText) findViewById(R.id.editText);
+        final EditText et2 = (EditText) findViewById(R.id.editText2);
+        TextView t1 = (TextView) findViewById(R.id.textView4);
+        TextView t2 = (TextView) findViewById(R.id.textView5);
+        Button accedi = (Button) findViewById(R.id.button2);
+        Button registrati = (Button) findViewById(R.id.button3);
+
+        final ConnectionHandler hand = new ConnectionHandler();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = preferences.edit();
@@ -108,20 +99,6 @@ public class StartActivity extends AppCompatActivity {
                 makeToast("C'e' qualcosa che non va");
                 progress.dismiss();
             }
-
-            ris = hand.Login(nome, pass);
-            final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-            Player.nome = nome;
-            ris = "3";
-            Player.id = Integer.valueOf(ris);
-            progress.dismiss();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(intent);
-                }
-            }, 500);
-            finish();
         }
 
         accedi.setOnClickListener(new View.OnClickListener() {
@@ -131,15 +108,13 @@ public class StartActivity extends AppCompatActivity {
                 pass = String.valueOf(et2.getText());
 
                 if (Functions.hasConnection(getApplicationContext())) {
-                    ris = hand.Login(nome, pass);
+                    String ris = hand.Login(nome, pass);
 
                     if (ris.equals("FAILED")) {
 
-                        makeToast("LOGIN " + ris + "!!!!!");
+                        makeToast("LOGIN " + ris);
 
                     } else {
-
-                        nome = String.valueOf(et1.getText());
 
                         editor.putString("nome", nome);
                         editor.putString("pass", pass);
@@ -175,26 +150,15 @@ public class StartActivity extends AppCompatActivity {
 
                 if (nome.length() < 5 || pass.length() < 5) {
                     makeToast("il nome o la password devono contenere almeno 5 caratteri");
-                    ris = "FAILED";
+                    return;
                 }
 
                 if (Functions.hasConnection(getApplicationContext())) {
 
-                    if (ris.equals("FAILED") == true) {
-                        makeToast("REGISTRATION " + ris + "!!!!!");
-                    } else {
-                        ris = hand.Registrazione(nome, pass);
-                    }
+                    String ris = hand.Registrazione(nome, pass);
 
-                    if (ris.equals("FAILED")) {
-
-                        makeToast("REGISTRATION " + ris + "!!!!!");
-
-                    }
-                    if (ris.equals("USER ALREADY EXISTS")) {
-
+                    if (ris.equals("FAILED") || ris.equals("USER ALREADY EXISTS")) {
                         makeToast(ris);
-
                     }
 
                     if (ris.equals("SUCCESS")) {

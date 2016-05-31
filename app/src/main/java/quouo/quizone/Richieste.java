@@ -9,80 +9,65 @@ public class Richieste {
 
     StatoRichiesta stato;
     String idRichiesta;
-    String player1;
-    String player2;
-    int punt1;
-    int punt2;
+    String nemicoNome;
+    int myPunt;
+    int nemicoPunt;
 
     public Richieste(String[] temp){
         idRichiesta = temp[0];
-        player1 = temp[1];
-        player2 = temp[3];
-        punt1 = Integer.valueOf(temp[2]);
-        punt2 = Integer.valueOf(temp[4]);
+        String player1 = temp[1];
+        String player2 = temp[3];
+        int p1 = Integer.valueOf(temp[2]);
+        int p2 = Integer.valueOf(temp[4]);
 
-        if(punt1 == -1 && punt2 == -1){
+        if(Player.nome.equals(player1)){
+            myPunt = p1;
+            nemicoPunt = p2;
+            nemicoNome = player2;
+        }
+        if(Player.nome.equals(player2)){
+            myPunt = p2;
+            nemicoPunt = p1;
+            nemicoNome = player1;
+        }
+
+        if(myPunt == -1){
             stato = StatoRichiesta.DAFARE;
-        } else if(punt2 > -1 && punt1 > -1){
+        } else if(myPunt > -1 && nemicoPunt == -1){
+            stato = StatoRichiesta.ASPETTA;
+        } else if(myPunt > -1 && nemicoPunt > -1){
             stato = StatoRichiesta.FINITA;
         } else {
-            if(Player.nome.equals(player1)){
-                if(punt1 > -1)
-                    stato = StatoRichiesta.ASPETTA;
-                else
-                    stato = StatoRichiesta.DAFARE;
-            }
-            if(Player.nome.equals(player2)){
-                if(punt2 > -1)
-                    stato = StatoRichiesta.ASPETTA;
-                else
-                    stato = StatoRichiesta.DAFARE;
-            }
-            else{
-                stato = StatoRichiesta.NONVALIDA;
-            }
+            stato = StatoRichiesta.NONVALIDA;
         }
+
         Functions.Debug("Creo la richiesta: " + stato);
     }
 
     public String getNemico(){
-        if(Player.nome.equals(player1))
-            return player2;
-        if(Player.nome.equals(player2))
-            return player1;
-        else
-            return "Bah";
+        return nemicoNome;
     }
 
     public String getIdRichiesta() {
         return idRichiesta;
     }
 
-    public String getPlayer1() {
-        return player1;
+    public int getMyPunt() {
+        return myPunt;
     }
 
-    public String getPlayer2() {
-        return player2;
+    public int getNemicoPunt() {
+        return nemicoPunt;
     }
 
-    public int getPunt1() {
-        return punt1;
-    }
-
-    public int getPunt2() {
-        return punt2;
-    }
-
-    @Override
-    public String toString() {
-        return "Richieste{" +
-                "stato=" + stato +
-                ", idRichiesta='" + idRichiesta + '\'' +
-                ", player1='" + player1 + '\'' +
-                ", player2='" + player2 + '\'' +
-                ", punt1=" + punt1 +
-                ", punt2=" + punt2 +
-                '}';
+    public String risultato(){
+        if(myPunt > nemicoPunt)
+            return "Vinto";
+        if(myPunt < nemicoPunt)
+            return "Perso";
+        if(myPunt == nemicoPunt)
+            return "Parita";
+        else
+            return "C'e' qualcosa che non va";
     }
 }

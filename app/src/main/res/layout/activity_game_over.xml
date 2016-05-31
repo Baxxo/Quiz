@@ -28,12 +28,13 @@
 
         <RatingBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:id="@+id/ratingBar"
             android:layout_marginTop="34dp"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
-            android:numStars="5" />
+            android:numStars="5"
+            android:clickable="false" />
 
         <Button
             android:layout_width="wrap_content"
