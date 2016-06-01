@@ -26,4 +26,24 @@
         android:layout_marginTop="147dp"
         android:layout_below="@+id/spaceshipImage" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Accesso in corso"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/spaceshipImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView8"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="36dp"
+        android:layout_toEndOf="@+id/textView6" />
+
 </RelativeLayout>

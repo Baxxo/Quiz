@@ -4,13 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 /**
  * Created by Matteo on 30/05/2016.
  */
 
 public class SplashScreen extends Activity {
-    int i=0;
+    int i = 0;
+    int n = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,16 +20,32 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        progressBar.setMax(1500);
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setMax(n);
 
-        Thread timerThread = new Thread(){
-            public void run(){
-                for(i=0;i<1500;i+=10){
-                    try{
+        final TextView tv = (TextView) findViewById(R.id.textView8);
+
+        Thread timerThread = new Thread() {
+            public void run() {
+                for (i = 0; i < n; i += 10) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (i % 3 == 0) {
+                                tv.setText(".");
+                            }
+                            if (i % 3 == 1) {
+                                tv.setText("..");
+                            }
+                            if (i % 3 == 2) {
+                                tv.setText("...");
+                            }
+                        }
+                    });
+                    try {
                         progressBar.setProgress(i);
-                        sleep(20);
-                    }catch(InterruptedException e){
+                        sleep(300);
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
