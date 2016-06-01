@@ -77,9 +77,10 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(Functions.hasConnection(getApplicationContext())) {
                     ConnectionHandler con = new ConnectionHandler();
-                    String id = con.CreaPartita(Player.id);
+                    String[] crea = con.CreaPartita(Player.id).split("<->");
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
-                    intent.putExtra("idPartita", id);
+                    intent.putExtra("idPartita", crea[0]);
+                    intent.putExtra("avversario", crea[1]);
                     startActivity(intent);
                     finish();
                 } else {
@@ -107,6 +108,9 @@ public class GameActivity extends AppCompatActivity {
                     break;
                 case FINITA:
                     AggiungiRichiestaAspetta(richieste[i], richieste[i].risultato());
+                    break;
+                case RIFIUTATA:
+                    AggiungiRichiestaAspetta(richieste[i], "La partita e' stata rifiutata");
                     break;
                 case NONVALIDA:
                     makeToast("Partita non valida");
@@ -178,8 +182,8 @@ public class GameActivity extends AppCompatActivity {
                 if(Functions.hasConnection(getApplicationContext())) {
                     linearLayout.removeView(row);
                     ConnectionHandler con = new ConnectionHandler();
-                    String ret = con.TerminaPartita(richiesta.getIdRichiesta(), Player.id);
-                    System.out.println("Cancellazione della partita: " + ret);
+                    String ret = con.InviaPunteggio(Player.id, richiesta.getIdRichiesta(), -2);
+                    AggiungiRichiestaAspetta(richiesta, "Ti sei arresso");
                 } else {
                     makeToast("Non c'e' internet");
                 }

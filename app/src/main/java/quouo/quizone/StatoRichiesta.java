@@ -7,5 +7,6 @@ public enum StatoRichiesta {
     DAFARE,
     ASPETTA,
     FINITA,
-    NONVALIDA
+    NONVALIDA,
+    RIFIUTATA
 }

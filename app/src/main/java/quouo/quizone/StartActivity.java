@@ -88,10 +88,10 @@ public class StartActivity extends AppCompatActivity {
             editor.apply();
             ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
             try{
-                String ris = hand.Login(nome, pass);
+                String[] ris = hand.Login(nome, pass).split("<->");
                 final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                Player.nome = nome;
-                Player.id = Integer.valueOf(ris);
+                Player.nome = ris[1];
+                Player.id = Integer.valueOf(ris[0]);
                 progress.dismiss();
                 startActivity(intent);
                 finish();
@@ -108,7 +108,7 @@ public class StartActivity extends AppCompatActivity {
                 pass = String.valueOf(et2.getText());
 
                 if (Functions.hasConnection(getApplicationContext())) {
-                    String ris = hand.Login(nome, pass);
+                    String[] ris = hand.Login(nome, pass).split("<->");
 
                     if (ris.equals("FAILED")) {
 
@@ -124,8 +124,8 @@ public class StartActivity extends AppCompatActivity {
                         ProgressDialog progressd = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                         try{
                             final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                            Player.nome = nome;
-                            Player.id = Integer.valueOf(ris);
+                            Player.nome = ris[1];
+                            Player.id = Integer.valueOf(ris[0]);
                             progressd.dismiss();
                             startActivity(intent);
                             finish();
@@ -166,10 +166,10 @@ public class StartActivity extends AppCompatActivity {
                         editor.putString("pass", pass);
                         editor.apply();
                         ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
-                        ris = hand.Login(nome, pass);
+                        String[] log = hand.Login(nome, pass).split("<->");
                         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
-                        Player.nome = nome;
-                        Player.id = Integer.valueOf(ris);
+                        Player.nome = log[1];
+                        Player.id = Integer.valueOf(log[0]);
                         progress.dismiss();
                         startActivity(intent);
                         finish();

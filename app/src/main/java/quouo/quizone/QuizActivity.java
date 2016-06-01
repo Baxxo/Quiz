@@ -53,7 +53,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         buttons[3] = (Button)findViewById(R.id.risposta4);
 
         nome1.setText(Player.nome);
-        //nome2.setText(getIntent().getStringExtra("avversario"));
+        nome2.setText(getIntent().getStringExtra("avversario"));
         ImpostaDomanda(numdomanda);
     }
 
@@ -67,7 +67,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
             return;
         }
 
-        StartTimer();
+        StartTimer(8);
 
         canPlay = true;
         domanda.setText(domande[index].getTesto());
@@ -104,10 +104,10 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         numeroDomanda.setText((numdomanda + 1) + "/5");
     }
 
-    private void StartTimer(){
+    private void StartTimer(int sec){
         if(timer != null)
             timer.stop = true;
-        timer = new Timer(this, 10);
+        timer = new Timer(this, sec);
         timer.start();
     }
 

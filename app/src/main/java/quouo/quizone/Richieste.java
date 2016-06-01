@@ -37,11 +37,11 @@ public class Richieste {
             stato = StatoRichiesta.ASPETTA;
         } else if(myPunt > -1 && nemicoPunt > -1){
             stato = StatoRichiesta.FINITA;
+        } else if(myPunt == -2 || nemicoPunt == -2){
+            stato = StatoRichiesta.RIFIUTATA;
         } else {
             stato = StatoRichiesta.NONVALIDA;
         }
-
-        Functions.Debug("Creo la richiesta: " + stato);
     }
 
     public String getNemico(){
