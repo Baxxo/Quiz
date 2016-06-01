@@ -89,7 +89,7 @@ public class StartActivity extends AppCompatActivity {
             ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
             try{
                 String[] ris = hand.Login(nome, pass).split("<->");
-                final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                final Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
                 Player.nome = ris[1];
                 Player.id = Integer.valueOf(ris[0]);
                 progress.dismiss();
@@ -123,7 +123,7 @@ public class StartActivity extends AppCompatActivity {
 
                         ProgressDialog progressd = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
                         try{
-                            final Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                            final Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
                             Player.nome = ris[1];
                             Player.id = Integer.valueOf(ris[0]);
                             progressd.dismiss();
@@ -167,7 +167,7 @@ public class StartActivity extends AppCompatActivity {
                         editor.apply();
                         ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Registrazione in corso...", true);
                         String[] log = hand.Login(nome, pass).split("<->");
-                        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
                         Player.nome = log[1];
                         Player.id = Integer.valueOf(log[0]);
                         progress.dismiss();
