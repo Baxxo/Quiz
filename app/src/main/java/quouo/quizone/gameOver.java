@@ -23,7 +23,7 @@ public class gameOver extends AppCompatActivity {
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(punteggio);
-        ratingBar.setEnabled(false);
+        ratingBar.setIsIndicator(true);
 
         Button button = (Button)findViewById(R.id.back);
         button.setOnClickListener(new View.OnClickListener() {

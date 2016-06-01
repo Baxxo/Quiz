@@ -8,41 +8,36 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="quouo.quizone.gameOver"
-    android:background="#6bffee">
+    android:background="#ffffff">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:background="#ffffff">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="IL TUO PUNTEGGIO E&apos;"
+        android:id="@+id/textView"
+        android:layout_marginTop="110dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="IL TUO PUNTEGGIO E&apos;"
-            android:id="@+id/textView"
-            android:layout_marginTop="110dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:id="@+id/ratingBar"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:numStars="5"
+        android:clickable="false"
+        android:backgroundTint="#ffffff"
+        android:background="#ffffff" />
 
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:id="@+id/ratingBar"
-            android:layout_marginTop="34dp"
-            android:layout_below="@+id/textView"
-            android:layout_centerHorizontal="true"
-            android:numStars="5"
-            android:clickable="false" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Torna al menù"
-            android:id="@+id/back"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="84dp" />
-    </RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Torna al menù"
+        android:id="@+id/back"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="84dp" />
 </RelativeLayout>

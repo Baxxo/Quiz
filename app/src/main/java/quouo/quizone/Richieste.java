@@ -1,7 +1,5 @@
 package quouo.quizone;
 
-import android.widget.TableRow;
-
 /**
  * Created by Oleksandr on 30/05/2016.
  */
@@ -62,9 +60,9 @@ public class Richieste {
 
     public String risultato(){
         if(myPunt > nemicoPunt)
-            return "Vinto";
+            return "Hai vinto";
         if(myPunt < nemicoPunt)
-            return "Perso";
+            return "Hai perso";
         if(myPunt == nemicoPunt)
             return "Parita";
         else

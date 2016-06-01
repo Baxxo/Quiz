@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,10 +21,7 @@ import android.widget.Toast;
 public class GameActivity extends AppCompatActivity {
 
     Button gioca;
-    int id;
     Dialog d;
-    ConnectionHandler hand = new ConnectionHandler();
-    BackgroundTask backgroundTask = new BackgroundTask();
     TableLayout linearLayout;
     Richieste[] richieste;
 
@@ -35,13 +33,10 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
-
-
         gioca = (Button) findViewById(R.id.start);
 
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
-
 
         if(!Functions.hasConnection(getApplicationContext())){
             d = new Dialog(this);
@@ -100,8 +95,9 @@ public class GameActivity extends AppCompatActivity {
         ConnectionHandler con = new ConnectionHandler();
         richieste = con.CaricaRichieste(Player.id);
 
-        for(int i = 0; i < richieste.length; i++){
-            Functions.Debug("Aggiungo richieste: " + i);
+        int[] stats = new int[3];
+
+        for(int i = richieste.length - 1; i > 0 ; i--){
 
             switch (richieste[i].stato){
                 case DAFARE:
@@ -112,15 +108,29 @@ public class GameActivity extends AppCompatActivity {
                     break;
                 case FINITA:
                     AggiungiRichiestaAspetta(richieste[i], richieste[i].risultato());
+                    switch (richieste[i].risultato()){
+                        case "Hai vinto":
+                            stats[0] ++;
+                            break;
+                        case "Hai perso":
+                            stats[2] ++;
+                            break;
+                        case "Parita":
+                            stats[1] ++;
+                            break;
+                    }
                     break;
                 case RIFIUTATA:
-                    AggiungiRichiestaAspetta(richieste[i], "La partita e' stata rifiutata");
+                    AggiungiRichiestaAspetta(richieste[i], "Rifiutata");
                     break;
                 case NONVALIDA:
                     makeToast("Partita non valida");
                     break;
             }
         }
+        TextView partite = (TextView)findViewById(R.id.partite);
+        partite.setText("Vin: " + stats[0] + " Par: " + stats[1] + " Per: " + stats[2]);
+        partite.setTextColor(Color.BLACK);
     }
 
     private void AggiungiRichiestaAspetta(final Richieste richiesta, final String testo) {
@@ -128,16 +138,23 @@ public class GameActivity extends AppCompatActivity {
         System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
         final TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
+        row.setMinimumHeight(getApplicationContext().getResources().getDisplayMetrics().densityDpi / 3);
+        row.setGravity(Gravity.CENTER_VERTICAL);
 
         TextView nome = new TextView(getApplicationContext());
         nome.setText(richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("        ");
+        nullo.setText("  -  ");
 
         TextView txt = new TextView(getApplicationContext());
-        txt.setText(testo);
+
+        if(richiesta.stato == StatoRichiesta.FINITA)
+            txt.setText(testo + " (" + richiesta.getMyPunt() + " : " + richiesta.getNemicoPunt() + ")");
+        else
+            txt.setText(testo);
+
         txt.setTextColor(Color.BLACK);
 
         row.addView(nome);
@@ -151,28 +168,29 @@ public class GameActivity extends AppCompatActivity {
         linearLayout = (TableLayout) findViewById(R.id.tableLayout);
         System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
         final TableRow row = new TableRow(getApplicationContext());
-        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
+        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
+        row.setMinimumHeight(getApplicationContext().getResources().getDisplayMetrics().densityDpi / 3);
+        row.setGravity(Gravity.CENTER_VERTICAL);
 
         TextView nome = new TextView(getApplicationContext());
         nome.setText(richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("        ");
+        nullo.setText("  -  ");
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
         accetta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Functions.hasConnection(getApplicationContext())) {
-                    linearLayout.removeView(row);
+                if(Functions.hasConnection(getApplicationContext())){
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                     intent.putExtra("idPartita", richiesta.getIdRichiesta());
                     intent.putExtra("avversario", richiesta.getNemico());
                     startActivity(intent);
                     finish();
-                } else {
+                } else{
                     makeToast("Non c'e' internet");
                 }
             }
