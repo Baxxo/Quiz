@@ -24,6 +24,10 @@ public class Domanda {
 
     }
 
+    public Domanda() {
+
+    }
+
     public String getTesto() {
         return testo;
     }

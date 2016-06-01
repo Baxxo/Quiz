@@ -75,6 +75,9 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
 
         for (int i = 0; i < 4; i++){
             buttons[i].setText(domande[index].getRisposta(i).getTesto());
+
+            ///
+            ///
             buttons[i].setBackgroundColor(Color.WHITE);
             final int temp = i;
             buttons[i].setOnClickListener(new View.OnClickListener() {
@@ -157,7 +160,8 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
     }
 
     public void onBackPressed() {
-        final Dialog d = new Dialog(this);
+        Toast.makeText(QuizActivity.this,"Non puoi uscire", Toast.LENGTH_LONG);
+        /*final Dialog d = new Dialog(this);
         d.setCancelable(true);
         d.setContentView(R.layout.esci);
         d.show();
@@ -180,7 +184,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
                 d.dismiss();
             }
         });
-        return;
+        return;*/
     }
 
     private void LoadFine(){

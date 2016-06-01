@@ -35,10 +35,13 @@ public class GameActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
 
+
+
         gioca = (Button) findViewById(R.id.start);
 
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
+
 
         if(!Functions.hasConnection(getApplicationContext())){
             d = new Dialog(this);
@@ -71,6 +74,7 @@ public class GameActivity extends AppCompatActivity {
                 finish();
             }
         });
+
 
         gioca.setOnClickListener(new View.OnClickListener() {
             @Override
