@@ -51,12 +51,12 @@ public class GameActivity extends AppCompatActivity {
                 u.setContentView(R.layout.profile);
                 u.show();
 
-                Display display =((WindowManager)getSystemService(getApplicationContext().WINDOW_SERVICE)).getDefaultDisplay();
+                Display display = ((WindowManager) getSystemService(getApplicationContext().WINDOW_SERVICE)).getDefaultDisplay();
                 int width = display.getWidth();
-                int height=display.getHeight();
+                int height = display.getHeight();
 
-                Log.v("width", width+"");
-                u.getWindow().setLayout((width-50),((height/2)+100));
+                Log.v("width", width + "");
+                u.getWindow().setLayout((width - 50), ((height / 2) + 100));
 
                 TextView user = (TextView) u.findViewById(R.id.textView9);
                 TextView t1 = (TextView) u.findViewById(R.id.textView10);
@@ -195,13 +195,13 @@ public class GameActivity extends AppCompatActivity {
         TextView txt = new TextView(getApplicationContext());
 
         if (richiesta.stato == StatoRichiesta.FINITA) {
-            if(testo.equals("Hai vinto")){
+            if (testo.equals("Hai vinto")) {
                 txt.setTextColor(Color.GREEN);
             }
-            if(testo.equals("Parita")){
+            if (testo.equals("Parita")) {
                 txt.setTextColor(Color.YELLOW);
             }
-            if(testo.equals("Hai perso")){
+            if (testo.equals("Hai perso")) {
                 txt.setTextColor(Color.RED);
             }
             txt.setText(testo + " (" + richiesta.getMyPunt() + " : " + richiesta.getNemicoPunt() + ")");
