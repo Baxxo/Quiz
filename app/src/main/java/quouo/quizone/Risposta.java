@@ -8,7 +8,7 @@ public class Risposta {
     private String testo;
     private boolean giusto;
 
-    public Risposta(String testo, boolean giusto){
+    public Risposta(String testo, boolean giusto) {
         this.testo = testo;
         this.giusto = giusto;
     }

@@ -87,7 +87,7 @@ public class StartActivity extends AppCompatActivity {
             editor.putString("pass", pass);
             editor.apply();
             ProgressDialog progress = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-            try{
+            try {
                 String[] ris = hand.Login(nome, pass).split("<->");
                 final Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
                 Player.nome = ris[1];
@@ -95,7 +95,7 @@ public class StartActivity extends AppCompatActivity {
                 progress.dismiss();
                 startActivity(intent);
                 finish();
-            } catch (Exception e){
+            } catch (Exception e) {
                 makeToast("C'e' qualcosa che non va");
                 progress.dismiss();
             }
@@ -122,14 +122,14 @@ public class StartActivity extends AppCompatActivity {
 
 
                         ProgressDialog progressd = ProgressDialog.show(StartActivity.this, "Attendere", "Accesso in corso...", true);
-                        try{
+                        try {
                             final Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
                             Player.nome = ris[1];
                             Player.id = Integer.valueOf(ris[0]);
                             progressd.dismiss();
                             startActivity(intent);
                             finish();
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             progressd.dismiss();
                             makeToast("C'e' qualcosa che non va");
                         }

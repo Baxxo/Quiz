@@ -6,6 +6,7 @@ package quouo.quizone;
 public interface ITimer {
 
     void OnTimeChange(int seconds);
+
     void OnTimeOver();
 
 }

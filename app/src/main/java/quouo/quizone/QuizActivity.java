@@ -41,25 +41,25 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         ConnectionHandler connectionHandler = new ConnectionHandler();
         System.out.println("Id partita: " + getIntent().getStringExtra("idPartita"));
         domande = connectionHandler.domande(getIntent().getStringExtra("idPartita"));
-        nome1 = (TextView)findViewById(R.id.nome1);
-        nome2 = (TextView)findViewById(R.id.nome2);
-        timerText = (TextView)findViewById(R.id.timerQuiz);
+        nome1 = (TextView) findViewById(R.id.nome1);
+        nome2 = (TextView) findViewById(R.id.nome2);
+        timerText = (TextView) findViewById(R.id.timerQuiz);
 
-        numeroDomanda = (TextView)findViewById(R.id.numeroDomanda);
-        domanda = (TextView)findViewById(R.id.Domanda);
-        buttons[0] = (Button)findViewById(R.id.risposta1);
-        buttons[1] = (Button)findViewById(R.id.risposta2);
-        buttons[2] = (Button)findViewById(R.id.risposta3);
-        buttons[3] = (Button)findViewById(R.id.risposta4);
+        numeroDomanda = (TextView) findViewById(R.id.numeroDomanda);
+        domanda = (TextView) findViewById(R.id.Domanda);
+        buttons[0] = (Button) findViewById(R.id.risposta1);
+        buttons[1] = (Button) findViewById(R.id.risposta2);
+        buttons[2] = (Button) findViewById(R.id.risposta3);
+        buttons[3] = (Button) findViewById(R.id.risposta4);
 
         nome1.setText(Player.nome);
         nome2.setText(getIntent().getStringExtra("avversario"));
         ImpostaDomanda(numdomanda);
     }
 
-    private void ImpostaDomanda(final int index){
-        if(index > 4){
-            if(!Functions.hasConnection(getApplicationContext())){
+    private void ImpostaDomanda(final int index) {
+        if (index > 4) {
+            if (!Functions.hasConnection(getApplicationContext())) {
                 NotConnectionDialog();
             } else {
                 LoadFine();
@@ -73,14 +73,14 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         domanda.setText(domande[index].getTesto());
         timerText.setTextColor(Color.BLACK);
 
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             buttons[i].setText(domande[index].getRisposta(i).getTesto());
             buttons[i].setBackgroundColor(Color.WHITE);
             final int temp = i;
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(canPlay) {
+                    if (canPlay) {
                         canPlay = false;
                         if (domande[index].getRisposta(temp).isGiusto()) {
                             punteggio++;
@@ -104,14 +104,14 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         numeroDomanda.setText((numdomanda + 1) + "/5");
     }
 
-    private void StartTimer(int sec){
-        if(timer != null)
+    private void StartTimer(int sec) {
+        if (timer != null)
             timer.stop = true;
         timer = new Timer(this, sec);
         timer.start();
     }
 
-    private void NotConnectionDialog(){
+    private void NotConnectionDialog() {
         final Dialog d = new Dialog(this);
         d.setTitle("Non c'e' internet");
         d.setCancelable(false);
@@ -123,7 +123,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Functions.hasConnection(getApplicationContext())){
+                if (Functions.hasConnection(getApplicationContext())) {
                     LoadFine();
                 } else {
                     Toast.makeText(getApplicationContext(), "Non c'e' internet", Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(seconds == 3){
+                if (seconds == 3) {
                     timerText.setTextColor(Color.RED);
                 }
                 timerText.setText(String.valueOf(seconds));
@@ -146,7 +146,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
     }
 
     @Override
-    public void OnTimeOver(){
+    public void OnTimeOver() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -157,13 +157,13 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
     }
 
     public void onBackPressed() {
-        Toast.makeText(QuizActivity.this,"Non puoi uscire", Toast.LENGTH_LONG);
+        Toast.makeText(QuizActivity.this, "Non puoi uscire", Toast.LENGTH_LONG);
     }
 
-    private void LoadFine(){
+    private void LoadFine() {
         ConnectionHandler con = new ConnectionHandler();
         String ret = con.InviaPunteggio(Player.id, getIntent().getStringExtra("idPartita"), punteggio);
-        if(ret == "FAILED"){
+        if (ret == "FAILED") {
             Toast.makeText(getApplicationContext(), "FAILED INVIA PUNTEGGIO", Toast.LENGTH_SHORT);
         }
         Intent intent = new Intent(getApplicationContext(), gameOver.class);
@@ -176,14 +176,14 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
     @Override
     protected void onStop() {
         super.onStop();
-        if(timer != null)
+        if (timer != null)
             timer.stop = true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(timer != null)
+        if (timer != null)
             timer.stop = true;
     }
 }

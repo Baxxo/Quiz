@@ -11,38 +11,38 @@ public class Richieste {
     int myPunt;
     int nemicoPunt;
 
-    public Richieste(String[] temp){
+    public Richieste(String[] temp) {
         idRichiesta = temp[0];
         String player1 = temp[1];
         String player2 = temp[3];
         int p1 = Integer.valueOf(temp[2]);
         int p2 = Integer.valueOf(temp[4]);
 
-        if(Player.nome.equals(player1)){
+        if (Player.nome.equals(player1)) {
             myPunt = p1;
             nemicoPunt = p2;
             nemicoNome = player2;
         }
-        if(Player.nome.equals(player2)){
+        if (Player.nome.equals(player2)) {
             myPunt = p2;
             nemicoPunt = p1;
             nemicoNome = player1;
         }
 
-        if(myPunt == -1){
+        if (myPunt == -1) {
             stato = StatoRichiesta.DAFARE;
-        } else if(myPunt > -1 && nemicoPunt == -1){
+        } else if (myPunt > -1 && nemicoPunt == -1) {
             stato = StatoRichiesta.ASPETTA;
-        } else if(myPunt > -1 && nemicoPunt > -1){
+        } else if (myPunt > -1 && nemicoPunt > -1) {
             stato = StatoRichiesta.FINITA;
-        } else if(myPunt == -2 || nemicoPunt == -2){
+        } else if (myPunt == -2 || nemicoPunt == -2) {
             stato = StatoRichiesta.RIFIUTATA;
         } else {
             stato = StatoRichiesta.NONVALIDA;
         }
     }
 
-    public String getNemico(){
+    public String getNemico() {
         return nemicoNome;
     }
 
@@ -58,12 +58,12 @@ public class Richieste {
         return nemicoPunt;
     }
 
-    public String risultato(){
-        if(myPunt > nemicoPunt)
+    public String risultato() {
+        if (myPunt > nemicoPunt)
             return "Hai vinto";
-        if(myPunt < nemicoPunt)
+        if (myPunt < nemicoPunt)
             return "Hai perso";
-        if(myPunt == nemicoPunt)
+        if (myPunt == nemicoPunt)
             return "Parita";
         else
             return "C'e' qualcosa che non va";
