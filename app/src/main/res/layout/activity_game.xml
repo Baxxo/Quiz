@@ -26,8 +26,8 @@
         android:layout_height="wrap_content"
         android:text="Vin/Par/Per"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_alignBottom="@+id/username"
-        android:layout_alignEnd="@+id/textRichieste" />
+        android:layout_alignBottom="@+id/view2"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView3"

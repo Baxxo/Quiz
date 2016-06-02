@@ -12,4 +12,14 @@ public class Player {
     public static String nome;
     public static int partite;
     public static int pareggio;
+    public static int vinte;
+    public static int pareggiate;
+    public static int perse;
+
+
+    public void setPar(int v, int p, int l){
+        vinte = v;
+        pareggiate = p;
+        perse = l;
+    }
 }
