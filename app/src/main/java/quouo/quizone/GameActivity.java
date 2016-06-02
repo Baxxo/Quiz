@@ -42,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
         usern.setClickable(true);
+        usern.setTextColor(Color.BLUE);
         usern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,11 +195,20 @@ public class GameActivity extends AppCompatActivity {
         TextView txt = new TextView(getApplicationContext());
 
         if (richiesta.stato == StatoRichiesta.FINITA) {
+            if(testo.equals("Hai vinto")){
+                txt.setTextColor(Color.GREEN);
+            }
+            if(testo.equals("Parita")){
+                txt.setTextColor(Color.YELLOW);
+            }
+            if(testo.equals("Hai perso")){
+                txt.setTextColor(Color.RED);
+            }
             txt.setText(testo + " (" + richiesta.getMyPunt() + " : " + richiesta.getNemicoPunt() + ")");
         } else {
             txt.setText(testo);
+            txt.setTextColor(Color.BLUE);
         }
-        txt.setTextColor(Color.BLACK);
 
         row.addView(nome);
         row.addView(nullo);
