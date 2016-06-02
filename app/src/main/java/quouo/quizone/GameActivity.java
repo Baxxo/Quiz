@@ -56,7 +56,7 @@ public class GameActivity extends AppCompatActivity {
                 int height=display.getHeight();
 
                 Log.v("width", width+"");
-                u.getWindow().setLayout((width-10),((height/2)+100));
+                u.getWindow().setLayout((width-50),((height/2)+100));
 
                 TextView user = (TextView) u.findViewById(R.id.textView9);
                 TextView t1 = (TextView) u.findViewById(R.id.textView10);
@@ -230,7 +230,7 @@ public class GameActivity extends AppCompatActivity {
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("  -  ");
+        nullo.setText("         -        ");
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
