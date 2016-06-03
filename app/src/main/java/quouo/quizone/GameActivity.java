@@ -319,6 +319,8 @@ public class GameActivity extends AppCompatActivity {
                 x2 = event.getX();
                 float deltaX = x2 - x1;
                 float deltaY = x2 + x1;
+
+                makeToast("wait");
                 if (Math.abs(deltaX) > MIN_DISTANCE) {
                     Intent i = new Intent(getApplicationContext(), Cerca.class);
                     startActivity(i);
