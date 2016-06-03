@@ -39,6 +39,16 @@ public class GameActivity extends AppCompatActivity {
 
         gioca = (Button) findViewById(R.id.start);
 
+        Button cerca = (Button)findViewById(R.id.cerca);
+        cerca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Cerca.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
         usern.setClickable(true);
@@ -140,7 +150,7 @@ public class GameActivity extends AppCompatActivity {
 
         int[] stats = new int[3];
 
-        for (int i = richieste.length - 1; i > 0; i--) {
+        for (int i = richieste.length - 1; i >= 0; i--) {
 
             switch (richieste[i].stato) {
                 case DAFARE:

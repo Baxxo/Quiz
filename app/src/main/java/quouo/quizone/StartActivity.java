@@ -60,8 +60,8 @@ public class StartActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     d.dismiss();
                     Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                    finish();
                     startActivity(intent);
+                    finish();
                 }
             });
             return;

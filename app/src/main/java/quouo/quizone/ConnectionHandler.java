@@ -1,5 +1,6 @@
 package quouo.quizone;
 
+import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -11,6 +12,39 @@ public class ConnectionHandler {
 
     public ConnectionHandler(){
 
+    }
+
+    public String CercaGiocatore(String nome){
+        String ret = "FAILED";
+
+        backgroundTask = new BackgroundTask();
+        backgroundTask.SetParams(new String[] {nome});
+        try {
+            ret = backgroundTask.execute(Request.CERCAGIOCATORE).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
+
+    public String CreaPartitaVs(int id, String enemyId){
+        String ret = "FAILED";
+
+        backgroundTask = new BackgroundTask();
+        backgroundTask.SetParams(new String[] {String.valueOf(id), enemyId});
+
+        try {
+            ret = backgroundTask.execute(Request.CREAPARTITAVS).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        Functions.Debug("VS: " + ret);
+        return ret;
     }
 
     public String Login(String nome, String password) {

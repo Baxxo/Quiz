@@ -112,4 +112,12 @@
             android:id="@+id/tableLayout"></TableLayout>
     </ScrollView>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerca"
+        android:id="@+id/cerca"
+        android:layout_alignTop="@+id/view2"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
