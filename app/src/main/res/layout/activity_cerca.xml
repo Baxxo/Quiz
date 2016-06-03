@@ -42,4 +42,12 @@
             android:id="@+id/tbl"></TableLayout>
     </ScrollView>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crea shortcut"
+        android:id="@+id/button4"
+        android:layout_alignBottom="@+id/scrollView2"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -44,15 +44,16 @@ public class GameActivity extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = preferences.edit();
 
-        if (preferences.getString("log", "false") == "false") {
-            editor.putString("log", "true");
-            editor.apply();
-            Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
-        }
-
         gioca = (Button) findViewById(R.id.start);
 
         TextView usern = (TextView) findViewById(R.id.username);
+
+        if (preferences.getString("toast", "false").equals("false") == true) {
+            editor.putString("toast", "true");
+            editor.apply();
+            Toast.makeText(GameActivity.this, "Prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
+        }
+
         usern.setText(Player.nome);
         usern.setClickable(true);
         usern.setTextColor(Color.BLUE);
@@ -69,7 +70,7 @@ public class GameActivity extends AppCompatActivity {
                 int height = display.getHeight();
 
                 Log.v("width", width + "");
-                u.getWindow().setLayout((width - 50), ((height / 2)+250));
+                u.getWindow().setLayout((width - 50), ((height / 2) + 250));
 
                 TextView user = (TextView) u.findViewById(R.id.textView9);
                 TextView t1 = (TextView) u.findViewById(R.id.textView10);
@@ -91,6 +92,8 @@ public class GameActivity extends AppCompatActivity {
                 t1.setTextColor(Color.GREEN);
                 t2.setTextColor(Color.YELLOW);
                 t3.setTextColor(Color.RED);
+
+
             }
         });
 
@@ -330,7 +333,6 @@ public class GameActivity extends AppCompatActivity {
         }
         return super.onTouchEvent(event);
     }
-
 
     private void makeToast(String text) {
         Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();

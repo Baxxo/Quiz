@@ -2,21 +2,14 @@ package quouo.quizone;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class StartActivity extends AppCompatActivity {
@@ -36,8 +29,6 @@ public class StartActivity extends AppCompatActivity {
 
         final EditText et1 = (EditText) findViewById(R.id.editText);
         final EditText et2 = (EditText) findViewById(R.id.editText2);
-        TextView t1 = (TextView) findViewById(R.id.textView4);
-        TextView t2 = (TextView) findViewById(R.id.textView5);
         Button accedi = (Button) findViewById(R.id.button2);
         Button registrati = (Button) findViewById(R.id.button3);
 
@@ -66,7 +57,6 @@ public class StartActivity extends AppCompatActivity {
             });
             return;
         }
-
 
         if (preferences.getString("nome", "null").equals("null")) {
             accesso1 = false;

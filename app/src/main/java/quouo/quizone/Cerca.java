@@ -17,11 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Cerca extends AppCompatActivity {
-    Richieste [] richieste;
+    Richieste[] richieste;
 
     LinearLayout linearLayout;
     private float x1, x2;
     static final int MIN_DISTANCE = 150;
+    Button s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +30,21 @@ public class Cerca extends AppCompatActivity {
         setContentView(R.layout.activity_cerca);
         linearLayout = (TableLayout) findViewById(R.id.tbl);
 
-        final TextView cerca = (TextView)findViewById(R.id.cercaText);
+        final TextView cerca = (TextView) findViewById(R.id.cercaText);
 
         ConnectionHandler con = new ConnectionHandler();
         richieste = con.CaricaRichieste(Player.id);
 
-        Button b = (Button)findViewById(R.id.cercaGiocatore);
+        s = (Button) findViewById(R.id.button4);
+
+        s.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addShortcut();
+            }
+        });
+
+        Button b = (Button) findViewById(R.id.cercaGiocatore);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,13 +55,13 @@ public class Cerca extends AppCompatActivity {
                     if (!enemy.equals("FAILED")) {
                         linearLayout.removeAllViews();
                         try {
-                            if(enemy[1].equals(Player.nome)){
+                            if (enemy[1].equals(Player.nome)) {
                                 AggiungiTesto("Sei tu");
                                 return;
                             }
                             AggiungiGiocattore(enemy[0]);
                             CaricaDomande(enemy[1]);
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             AggiungiTesto("Nessuno");
                         }
                     }
@@ -62,7 +72,7 @@ public class Cerca extends AppCompatActivity {
         });
     }
 
-    private void AggiungiGiocattore(final String id){
+    private void AggiungiGiocattore(final String id) {
         Button b = new Button(getApplicationContext());
         b.setText("Sfida");
         b.setOnClickListener(new View.OnClickListener() {
@@ -85,13 +95,13 @@ public class Cerca extends AppCompatActivity {
         linearLayout.addView(b);
     }
 
-    private void TornaNelMenuPrincipale(){
+    private void TornaNelMenuPrincipale() {
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void AggiungiTesto(String testo){
+    private void AggiungiTesto(String testo) {
         TextView t = new TextView(getApplicationContext());
         t.setText(testo);
         t.setTextColor(Color.BLACK);
@@ -101,9 +111,9 @@ public class Cerca extends AppCompatActivity {
     //////////////////////////////////////////
 
 
-    private void CaricaDomande(String nome){
-        for(int i = richieste.length - 1; i >= 0; i--){
-            if(richieste[i].getNemico().equals(nome)){
+    private void CaricaDomande(String nome) {
+        for (int i = richieste.length - 1; i >= 0; i--) {
+            if (richieste[i].getNemico().equals(nome)) {
                 switch (richieste[i].stato) {
                     case DAFARE:
                         AggiungiRichiestaDaFare(richieste[i]);
@@ -244,5 +254,26 @@ public class Cerca extends AppCompatActivity {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private void addShortcut() {
+        Intent shortcutIntent = new Intent(getApplicationContext(),
+                StartActivity.class);
+
+        shortcutIntent.setAction(Intent.ACTION_MAIN);
+
+        Intent addIntent = new Intent();
+        addIntent
+                .putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "QuizOne");
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
+                        R.drawable.logo));
+
+        addIntent
+                .setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        getApplicationContext().sendBroadcast(addIntent);
+
+        Toast.makeText(this, "Aggiunta una scorciatoia nella Home Screen", Toast.LENGTH_SHORT);
     }
 }
