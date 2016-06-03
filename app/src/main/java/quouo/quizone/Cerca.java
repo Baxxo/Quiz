@@ -84,6 +84,11 @@ public class Cerca extends AppCompatActivity {
         linearLayout.addView(b);
     }
 
+    private void TornaNelMenuPrincipale(){
+        Intent intent = new Intent(getApplicationContext(), GameActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     //////////////////////////////////////////
 
@@ -223,9 +228,8 @@ public class Cerca extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(getApplicationContext(), GameActivity.class);
+        this.finish();
         startActivity(i);
-        finish();
-        return;
     }
 
     @Override
