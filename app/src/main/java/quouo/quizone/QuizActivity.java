@@ -75,7 +75,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
 
         for (int i = 0; i < 4; i++) {
             buttons[i].setText(domande[index].getRisposta(i).getTesto());
-            buttons[i].setBackgroundColor(Color.parseColor("#88565bff"));
+            buttons[i].setBackgroundColor(Color.parseColor("#5bffd1"));
             final int temp = i;
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
