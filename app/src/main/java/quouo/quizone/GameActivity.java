@@ -49,8 +49,8 @@ public class GameActivity extends AppCompatActivity {
             editor.putString("log", "true");
             editor.apply();
             addShortcut();
-            Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
         }
+        Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
 
         gioca = (Button) findViewById(R.id.start);
 
@@ -71,7 +71,7 @@ public class GameActivity extends AppCompatActivity {
                 int height = display.getHeight();
 
                 Log.v("width", width + "");
-                u.getWindow().setLayout((width - 50), ((height / 2) + 100));
+                u.getWindow().setLayout((width - 50), ((height / 2)+250));
 
                 TextView user = (TextView) u.findViewById(R.id.textView9);
                 TextView t1 = (TextView) u.findViewById(R.id.textView10);
