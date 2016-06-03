@@ -41,7 +41,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gioca = (Button) findViewById(R.id.start);
-        makeToast("prova lo swipe a destra o sinistra sopra il bottone sfida!");
 
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
