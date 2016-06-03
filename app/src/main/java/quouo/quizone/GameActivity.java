@@ -329,10 +329,8 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case MotionEvent.ACTION_UP:
                 x2 = event.getX();
-                float deltaX1 = x2 - x1;
-                float deltaX2 = x1 - x2;
-                float deltaY = x2 + x1;
-                if (Math.abs(deltaX1) > MIN_DISTANCE || Math.abs(deltaX2) > MIN_DISTANCE) {
+                float delta = x2 - x1;
+                if (Math.abs(delta) > MIN_DISTANCE || Math.abs(delta) < -MIN_DISTANCE) {
                     Intent i = new Intent(getApplicationContext(), Cerca.class);
                     startActivity(i);
                     finish();

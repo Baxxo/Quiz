@@ -67,7 +67,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
             return;
         }
 
-        StartTimer(8);
+        StartTimer(12);
 
         canPlay = true;
         domanda.setText(domande[index].getTesto());

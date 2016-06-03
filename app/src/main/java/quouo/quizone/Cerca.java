@@ -27,6 +27,7 @@ public class Cerca extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cerca);
+        linearLayout = (TableLayout) findViewById(R.id.tbl);
 
         final TextView cerca = (TextView)findViewById(R.id.cercaText);
 
@@ -40,17 +41,18 @@ public class Cerca extends AppCompatActivity {
                 if (Functions.hasConnection(getApplicationContext())) {
                     ConnectionHandler con = new ConnectionHandler();
                     String[] enemy = con.CercaGiocatore(cerca.getText().toString()).split("<->");
+
                     if (!enemy.equals("FAILED")) {
-                        linearLayout = (TableLayout) findViewById(R.id.tbl);
                         linearLayout.removeAllViews();
                         try {
+                            if(enemy[1].equals(Player.nome)){
+                                AggiungiTesto("Sei tu");
+                                return;
+                            }
                             AggiungiGiocattore(enemy[0]);
                             CaricaDomande(enemy[1]);
                         } catch (Exception e){
-                            TextView t = new TextView(getApplicationContext());
-                            t.setText("Niente");
-                            t.setTextColor(Color.BLACK);
-                            linearLayout.addView(t);
+                            AggiungiTesto("Nessuno");
                         }
                     }
                 } else {
@@ -61,7 +63,6 @@ public class Cerca extends AppCompatActivity {
     }
 
     private void AggiungiGiocattore(final String id){
-        linearLayout = (TableLayout) findViewById(R.id.tbl);
         Button b = new Button(getApplicationContext());
         b.setText("Sfida");
         b.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +89,13 @@ public class Cerca extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), GameActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void AggiungiTesto(String testo){
+        TextView t = new TextView(getApplicationContext());
+        t.setText(testo);
+        t.setTextColor(Color.BLACK);
+        linearLayout.addView(t);
     }
 
     //////////////////////////////////////////
@@ -119,7 +127,6 @@ public class Cerca extends AppCompatActivity {
 
 
     private void AggiungiRichiestaAspetta(final Richieste richiesta, final String testo) {
-        linearLayout = (TableLayout) findViewById(R.id.tbl);
         System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
         final TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
@@ -129,13 +136,6 @@ public class Cerca extends AppCompatActivity {
         TextView nome = new TextView(getApplicationContext());
         nome.setText(richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
-
-        nome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         TextView nullo = new TextView(getApplicationContext());
         nullo.setText("     ");
@@ -166,8 +166,6 @@ public class Cerca extends AppCompatActivity {
     }
 
     private void AggiungiRichiestaDaFare(final Richieste richiesta) {
-        linearLayout = (TableLayout) findViewById(R.id.tbl);
-        System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
         final TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
         row.setMinimumHeight(getApplicationContext().getResources().getDisplayMetrics().densityDpi / 3);
@@ -240,13 +238,9 @@ public class Cerca extends AppCompatActivity {
                 break;
             case MotionEvent.ACTION_UP:
                 x2 = event.getX();
-                float deltaX1 = x2 - x1;
-                float deltaX2 = x2 + x1;
-                makeToast("wait");
-                if (Math.abs(deltaX1) > MIN_DISTANCE || Math.abs(deltaX2) > MIN_DISTANCE) {
-                    Intent i = new Intent(getApplicationContext(), GameActivity.class);
-                    startActivity(i);
-                    finish();
+                float delta = x2 - x1;
+                if (Math.abs(delta) > MIN_DISTANCE || Math.abs(delta) < -MIN_DISTANCE) {
+                    TornaNelMenuPrincipale();
                 }
                 break;
         }
