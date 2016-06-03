@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,6 +20,8 @@ public class Cerca extends AppCompatActivity {
     Richieste [] richieste;
 
     LinearLayout linearLayout;
+    private float x1, x2;
+    static final int MIN_DISTANCE = 150;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,5 +226,31 @@ public class Cerca extends AppCompatActivity {
         startActivity(i);
         finish();
         return;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = x2 - x1;
+                float deltaY = x2 + x1;
+                makeToast("wait");
+                if (Math.abs(deltaX) > MIN_DISTANCE) {
+                    Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                if (Math.abs(deltaY) > MIN_DISTANCE) {
+                    Intent i = new Intent(getApplicationContext(), GameActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 }
