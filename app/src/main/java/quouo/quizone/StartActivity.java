@@ -107,6 +107,20 @@ public class StartActivity extends AppCompatActivity {
                 nome = String.valueOf(et1.getText());
                 pass = String.valueOf(et2.getText());
 
+                if (nome.length() < 5 || pass.length() < 5) {
+                    makeToast("il nome o la password devono contenere almeno 5 caratteri");
+                    return;
+                }
+
+                if (pass.length() < 0) {
+                    makeToast("inserisci password");
+                    return;
+                }
+                if (nome.length() < 0) {
+                    makeToast("inserisci nome utente");
+                    return;
+                }
+
                 if (Functions.hasConnection(getApplicationContext())) {
                     String[] ris = hand.Login(nome, pass).split("<->");
 
@@ -152,6 +166,16 @@ public class StartActivity extends AppCompatActivity {
                     makeToast("il nome o la password devono contenere almeno 5 caratteri");
                     return;
                 }
+
+                if (pass.length() < 0) {
+                    makeToast("inserisci password");
+                    return;
+                }
+                if (nome.length() < 0) {
+                    makeToast("inserisci nome utente");
+                    return;
+                }
+
 
                 if (Functions.hasConnection(getApplicationContext())) {
 

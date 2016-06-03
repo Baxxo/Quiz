@@ -30,7 +30,9 @@ public class GameActivity extends AppCompatActivity {
     Richieste[] richieste;
     Player p = new Player();
     private float x1, x2;
-    static final int MIN_DISTANCE = 150;
+    static final int MIN_DISTANCE = 250;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,17 @@ public class GameActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_game);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = preferences.edit();
+
+        makeToast(preferences.getString("log", "ciao"));
+
+        if (preferences.getString("log", "false") == "false") {
+            editor.putString("log", "true");
+            editor.apply();
+            Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
+        }
 
         gioca = (Button) findViewById(R.id.start);
 
