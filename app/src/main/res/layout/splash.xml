@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
-        android:layout_marginBottom="32dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="85dp"
+        android:layout_below="@+id/spaceshipImage"
         android:layout_alignStart="@+id/textView6"
         android:layout_toStartOf="@+id/textView8" />
 

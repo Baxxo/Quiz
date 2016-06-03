@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,6 +29,8 @@ public class GameActivity extends AppCompatActivity {
     TableLayout linearLayout;
     Richieste[] richieste;
     Player p = new Player();
+    private float x1, x2;
+    static final int MIN_DISTANCE = 150;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +41,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gioca = (Button) findViewById(R.id.start);
-
-        Button cerca = (Button)findViewById(R.id.cerca);
-        cerca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Cerca.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
@@ -315,6 +308,32 @@ public class GameActivity extends AppCompatActivity {
         });
         return;
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = x2 - x1;
+                float deltaY = x2 + x1;
+                if (Math.abs(deltaX) > MIN_DISTANCE) {
+                    Intent i = new Intent(getApplicationContext(), Cerca.class);
+                    startActivity(i);
+                    finish();
+                }
+                if (Math.abs(deltaY) > MIN_DISTANCE) {
+                    Intent i = new Intent(getApplicationContext(), Cerca.class);
+                    startActivity(i);
+                    finish();
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
 
     private void makeToast(String text) {
         Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();

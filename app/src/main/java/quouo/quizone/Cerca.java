@@ -1,5 +1,6 @@
 package quouo.quizone;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBar;
@@ -203,5 +204,13 @@ public class Cerca extends AppCompatActivity {
 
     private void makeToast(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), GameActivity.class);
+        startActivity(i);
+        finish();
+        return;
     }
 }
