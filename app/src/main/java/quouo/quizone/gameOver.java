@@ -2,6 +2,8 @@ package quouo.quizone;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +34,7 @@ public class gameOver extends AppCompatActivity {
                 TornaNelMenuPrincipale();
             }
         });
+
     }
 
     private void TornaNelMenuPrincipale(){

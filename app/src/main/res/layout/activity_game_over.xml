@@ -16,21 +16,22 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="IL TUO PUNTEGGIO E&apos;"
         android:id="@+id/textView"
-        android:layout_marginTop="110dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="28dp" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="55dp"
         android:id="@+id/ratingBar"
-        android:layout_marginTop="34dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
         android:numStars="5"
+        android:progressTint="#FFFFEE00"
         android:clickable="false"
         android:backgroundTint="#ffffff"
-        android:background="#ffffff" />
+        android:background="#ffffff"
+        android:layout_above="@+id/back"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -40,4 +41,12 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="84dp" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

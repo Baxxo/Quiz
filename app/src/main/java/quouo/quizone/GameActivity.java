@@ -189,7 +189,7 @@ public class GameActivity extends AppCompatActivity {
         row.setGravity(Gravity.CENTER_VERTICAL);
 
         TextView nome = new TextView(getApplicationContext());
-        nome.setText(richiesta.getNemico());
+        nome.setText("   " + richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
         nome.setOnClickListener(new View.OnClickListener() {
