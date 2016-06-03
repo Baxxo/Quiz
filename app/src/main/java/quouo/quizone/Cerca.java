@@ -127,7 +127,6 @@ public class Cerca extends AppCompatActivity {
 
 
     private void AggiungiRichiestaAspetta(final Richieste richiesta, final String testo) {
-        System.out.println("Carico partita id: " + richiesta.getIdRichiesta());
         final TableRow row = new TableRow(getApplicationContext());
         row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
         row.setMinimumHeight(getApplicationContext().getResources().getDisplayMetrics().densityDpi / 3);
@@ -147,7 +146,7 @@ public class Cerca extends AppCompatActivity {
                 txt.setTextColor(Color.GREEN);
             }
             if (testo.equals("Parita")) {
-                txt.setTextColor(Color.YELLOW);
+                txt.setTextColor(Color.GRAY);
             }
             if (testo.equals("Hai perso")) {
                 txt.setTextColor(Color.RED);
@@ -167,7 +166,7 @@ public class Cerca extends AppCompatActivity {
 
     private void AggiungiRichiestaDaFare(final Richieste richiesta) {
         final TableRow row = new TableRow(getApplicationContext());
-        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT));
+        row.setLayoutParams(new ActionBar.LayoutParams(TableRow.LayoutParams.MATCH_PARENT));
         row.setMinimumHeight(getApplicationContext().getResources().getDisplayMetrics().densityDpi / 3);
         row.setGravity(Gravity.CENTER_VERTICAL);
 

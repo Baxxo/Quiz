@@ -17,7 +17,7 @@ public class Player {
     public static int perse;
 
 
-    public void setPar(int v, int p, int l) {
+    public static void setPar(int v, int p, int l) {
         vinte = v;
         pareggiate = p;
         perse = l;

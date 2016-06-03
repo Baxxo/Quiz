@@ -28,7 +28,6 @@ public class GameActivity extends AppCompatActivity {
     Dialog u;
     TableLayout linearLayout;
     Richieste[] richieste;
-    Player p = new Player();
     private float x1, x2;
     static final int MIN_DISTANCE = 250;
     SharedPreferences preferences;
@@ -48,9 +47,8 @@ public class GameActivity extends AppCompatActivity {
         if (preferences.getString("log", "false") == "false") {
             editor.putString("log", "true");
             editor.apply();
-            addShortcut();
+            Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
 
         gioca = (Button) findViewById(R.id.start);
 
@@ -81,10 +79,10 @@ public class GameActivity extends AppCompatActivity {
                 TextView par = (TextView) u.findViewById(R.id.textView14);
                 TextView per = (TextView) u.findViewById(R.id.textView15);
 
-                user.setText(String.valueOf(p.nome));
-                vinte.setText(String.valueOf(p.vinte));
-                par.setText(String.valueOf(p.pareggiate));
-                per.setText(String.valueOf(p.perse));
+                user.setText(String.valueOf(Player.nome));
+                vinte.setText(String.valueOf(Player.vinte));
+                par.setText(String.valueOf(Player.pareggiate));
+                per.setText(String.valueOf(Player.perse));
                 user.setTextColor(Color.BLUE);
 
                 vinte.setTextColor(Color.GREEN);
@@ -187,7 +185,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
         TextView partite = (TextView) findViewById(R.id.partite);
-        p.setPar(stats[0], stats[1], stats[2]);
+        Player.setPar(stats[0], stats[1], stats[2]);
         partite.setText("Vin: " + stats[0] + " Par: " + stats[1] + " Per: " + stats[2]);
         partite.setTextColor(Color.BLACK);
     }
@@ -204,13 +202,6 @@ public class GameActivity extends AppCompatActivity {
         nome.setText("      " + richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
-        nome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         TextView nullo = new TextView(getApplicationContext());
         nullo.setText("     ");
 
@@ -221,7 +212,7 @@ public class GameActivity extends AppCompatActivity {
                 txt.setTextColor(Color.GREEN);
             }
             if (testo.equals("Parita")) {
-                txt.setTextColor(Color.YELLOW);
+                txt.setTextColor(Color.GRAY);
             }
             if (testo.equals("Hai perso")) {
                 txt.setTextColor(Color.RED);
@@ -343,27 +334,6 @@ public class GameActivity extends AppCompatActivity {
 
     private void makeToast(String text) {
         Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
-    }
-
-    private void addShortcut() {
-        Intent shortcutIntent = new Intent(getApplicationContext(),
-                StartActivity.class);
-
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-
-        Intent addIntent = new Intent();
-        addIntent
-                .putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "QuiOne");
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                        R.drawable.logo));
-
-        addIntent
-                .setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        getApplicationContext().sendBroadcast(addIntent);
-
-        makeToast("Aggiunta una scorciatoia nella Home Screen");
     }
 
 }
