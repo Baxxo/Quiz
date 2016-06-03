@@ -40,7 +40,9 @@
         <activity
             android:name=".gameOver"
             android:screenOrientation="portrait" />
-        <activity android:name=".Cerca"></activity>
+        <activity
+            android:name=".Cerca"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

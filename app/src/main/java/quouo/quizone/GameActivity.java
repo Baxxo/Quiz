@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         gioca = (Button) findViewById(R.id.start);
+        makeToast("prova lo swipe a destra o sinistra sopra il bottone sfida!");
 
         TextView usern = (TextView) findViewById(R.id.username);
         usern.setText(Player.nome);
@@ -189,7 +190,7 @@ public class GameActivity extends AppCompatActivity {
         row.setGravity(Gravity.CENTER_VERTICAL);
 
         TextView nome = new TextView(getApplicationContext());
-        nome.setText("   " + richiesta.getNemico());
+        nome.setText("      " + richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
         nome.setOnClickListener(new View.OnClickListener() {
@@ -317,16 +318,9 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case MotionEvent.ACTION_UP:
                 x2 = event.getX();
-                float deltaX = x2 - x1;
-                float deltaY = x2 + x1;
-
-                makeToast("wait");
-                if (Math.abs(deltaX) > MIN_DISTANCE) {
-                    Intent i = new Intent(getApplicationContext(), Cerca.class);
-                    startActivity(i);
-                    finish();
-                }
-                if (Math.abs(deltaY) > MIN_DISTANCE) {
+                float deltaX1 = x2 - x1;
+                float deltaX2 = x2 + x1;
+                if (Math.abs(deltaX1) > MIN_DISTANCE || Math.abs(deltaX2) > MIN_DISTANCE) {
                     Intent i = new Intent(getApplicationContext(), Cerca.class);
                     startActivity(i);
                     finish();
