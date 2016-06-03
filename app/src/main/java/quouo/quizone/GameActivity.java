@@ -48,9 +48,8 @@ public class GameActivity extends AppCompatActivity {
         if (preferences.getString("log", "false") == "false") {
             editor.putString("log", "true");
             editor.apply();
-            addShortcut();
+            Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(GameActivity.this, "prova a fare uno swipe a destra o a sinistra", Toast.LENGTH_LONG).show();
 
         gioca = (Button) findViewById(R.id.start);
 
@@ -345,27 +344,6 @@ public class GameActivity extends AppCompatActivity {
 
     private void makeToast(String text) {
         Toast.makeText(GameActivity.this, text, Toast.LENGTH_SHORT).show();
-    }
-
-    private void addShortcut() {
-        Intent shortcutIntent = new Intent(getApplicationContext(),
-                StartActivity.class);
-
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-
-        Intent addIntent = new Intent();
-        addIntent
-                .putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "QuiOne");
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                        R.drawable.logo));
-
-        addIntent
-                .setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        getApplicationContext().sendBroadcast(addIntent);
-
-        makeToast("Aggiunta una scorciatoia nella Home Screen");
     }
 
 }
