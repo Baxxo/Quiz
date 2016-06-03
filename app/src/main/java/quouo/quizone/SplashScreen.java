@@ -30,13 +30,13 @@ public class SplashScreen extends Activity {
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = preferences.edit();
 
-        /*Toast.makeText(this, preferences.getString("log", "false"), Toast.LENGTH_SHORT);
+        Toast.makeText(this, preferences.getString("log", "false"), Toast.LENGTH_SHORT);
 
         if (preferences.getString("log", "false") == "false") {
             editor.putString("log", "true");
             editor.apply();
             addShortcut();
-        }*/
+        }
 
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
