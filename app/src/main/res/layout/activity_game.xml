@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="quouo.quizone.GameActivity"
-    android:background="#eae6cb">
+    android:background="#c0ccff">
 
 
     <TextView
@@ -56,7 +56,7 @@
         android:shadowDy="0"
         android:shadowRadius="5"
         android:text="Sfida!"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -87,12 +87,14 @@
         android:id="@+id/textRichieste"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="Richieste"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#00ff00"
-        android:background="#eae6cb" />
+        android:textColor="#000000"
+        android:background="#b0ffffff"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textView3"
+        android:gravity="center" />
 
     <ScrollView
         android:id="@+id/scrollView"

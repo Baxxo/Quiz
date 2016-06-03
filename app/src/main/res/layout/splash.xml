@@ -8,22 +8,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spaceshipImage"
-        android:layout_marginTop="37dp"
-        android:background="@drawable/icon"
+        android:background="@drawable/logo"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
-        android:layout_marginBottom="106dp"
+        android:layout_marginBottom="32dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/spaceshipImage"
-        android:layout_alignEnd="@+id/spaceshipImage"
-        android:layout_marginTop="147dp"
-        android:layout_below="@+id/spaceshipImage" />
+        android:layout_alignStart="@+id/textView6"
+        android:layout_toStartOf="@+id/textView8" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,8 +29,7 @@
         android:text="Accesso in corso"
         android:id="@+id/textView6"
         android:layout_below="@+id/spaceshipImage"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"

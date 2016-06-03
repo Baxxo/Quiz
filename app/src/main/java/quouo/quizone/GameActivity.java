@@ -189,8 +189,15 @@ public class GameActivity extends AppCompatActivity {
         nome.setText(richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
+        nome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("  -  ");
+        nullo.setText("     ");
 
         TextView txt = new TextView(getApplicationContext());
 
@@ -230,7 +237,7 @@ public class GameActivity extends AppCompatActivity {
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());
-        nullo.setText("         -        ");
+        nullo.setText("     ");
 
         Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
@@ -250,7 +257,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         Button rifiuta = new Button(getApplicationContext());
-        rifiuta.setText("Arrenderti");
+        rifiuta.setText("Arrenditi");
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
