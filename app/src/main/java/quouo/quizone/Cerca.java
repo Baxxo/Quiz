@@ -34,13 +34,24 @@ public class Cerca extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionHandler con = new ConnectionHandler();
-                String[] enemy = con.CercaGiocatore(cerca.getText().toString()).split("<->");
-                if(!enemy.equals("FAILED")){
-                    linearLayout = (TableLayout) findViewById(R.id.tbl);
-                    linearLayout.removeAllViews();
-                    AggiungiGiocattore(enemy[0]);
-                    CaricaDomande(enemy[1]);
+                if (Functions.hasConnection(getApplicationContext())) {
+                    ConnectionHandler con = new ConnectionHandler();
+                    String[] enemy = con.CercaGiocatore(cerca.getText().toString()).split("<->");
+                    if (!enemy.equals("FAILED")) {
+                        linearLayout = (TableLayout) findViewById(R.id.tbl);
+                        linearLayout.removeAllViews();
+                        try {
+                            AggiungiGiocattore(enemy[0]);
+                            CaricaDomande(enemy[1]);
+                        } catch (Exception e){
+                            TextView t = new TextView(getApplicationContext());
+                            t.setText("Niente");
+                            t.setTextColor(Color.BLACK);
+                            linearLayout.addView(t);
+                        }
+                    }
+                } else {
+                    makeToast("Non c'e' internet");
                 }
             }
         });
@@ -75,7 +86,7 @@ public class Cerca extends AppCompatActivity {
 
 
     private void CaricaDomande(String nome){
-        for(int i = 0; i < richieste.length; i++){
+        for(int i = richieste.length - 1; i >= 0; i--){
             if(richieste[i].getNemico().equals(nome)){
                 switch (richieste[i].stato) {
                     case DAFARE:
