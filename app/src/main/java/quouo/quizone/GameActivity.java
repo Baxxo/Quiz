@@ -14,6 +14,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -61,16 +62,10 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 u = new Dialog(GameActivity.this);
-                u.setTitle("player");
+                u.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 u.setContentView(R.layout.profile);
+
                 u.show();
-
-                Display display = ((WindowManager) getSystemService(getApplicationContext().WINDOW_SERVICE)).getDefaultDisplay();
-                int width = display.getWidth();
-                int height = display.getHeight();
-
-                Log.v("width", width + "");
-                u.getWindow().setLayout((width - 50), ((height / 2) + 250));
 
                 TextView user = (TextView) u.findViewById(R.id.textView9);
                 TextView t1 = (TextView) u.findViewById(R.id.textView10);
@@ -84,15 +79,20 @@ public class GameActivity extends AppCompatActivity {
                 vinte.setText(String.valueOf(Player.vinte));
                 par.setText(String.valueOf(Player.pareggiate));
                 per.setText(String.valueOf(Player.perse));
-                user.setTextColor(Color.BLUE);
+                user.setTextColor(Color.WHITE);
 
                 vinte.setTextColor(Color.GREEN);
-                par.setTextColor(Color.DKGRAY);
+                par.setTextColor(Color.CYAN);
                 per.setTextColor(Color.RED);
                 t1.setTextColor(Color.GREEN);
-                t2.setTextColor(Color.DKGRAY);
+                t2.setTextColor(Color.CYAN);
                 t3.setTextColor(Color.RED);
 
+                TextView tot = (TextView) u.findViewById(R.id.textTot);
+                tot.setTextColor(Color.WHITE);
+                int totale = Player.pareggiate + Player.perse + Player.vinte;
+                TextView totalepartite = (TextView) u.findViewById(R.id.textView16);
+                totalepartite.setText(String.valueOf(totale));
 
             }
         });
