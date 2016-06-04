@@ -102,11 +102,11 @@ public class StartActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (pass.length() < 0) {
+                if (pass.length() < 1) {
                     makeToast("inserisci password");
                     return;
                 }
-                if (nome.length() < 0) {
+                if (nome.length() < 1) {
                     makeToast("inserisci nome utente");
                     return;
                 }

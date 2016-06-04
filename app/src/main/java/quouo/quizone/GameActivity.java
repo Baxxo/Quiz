@@ -87,10 +87,10 @@ public class GameActivity extends AppCompatActivity {
                 user.setTextColor(Color.BLUE);
 
                 vinte.setTextColor(Color.GREEN);
-                par.setTextColor(Color.YELLOW);
+                par.setTextColor(Color.DKGRAY);
                 per.setTextColor(Color.RED);
                 t1.setTextColor(Color.GREEN);
-                t2.setTextColor(Color.YELLOW);
+                t2.setTextColor(Color.DKGRAY);
                 t3.setTextColor(Color.RED);
 
 

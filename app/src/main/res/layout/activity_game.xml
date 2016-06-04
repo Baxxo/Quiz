@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="quouo.quizone.GameActivity"
-    android:background="#acf1ff">
+    android:background="#7ef1e5"
+    android:contextClickable="false">
 
 
     <TextView
@@ -92,7 +93,7 @@
         android:text="Richieste"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ffffff"
-        android:background="#b0565bff"
+        android:background="#FF4066FF"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/textView3"
         android:gravity="center"
