@@ -32,8 +32,7 @@
         android:id="@+id/scrollView2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/cercaGiocatore"
-        android:layout_above="@+id/button4">
+        android:layout_below="@+id/cercaGiocatore">
 
         <TableLayout
             android:layout_width="match_parent"
@@ -41,13 +40,5 @@
             android:orientation="vertical"
             android:id="@+id/tbl"></TableLayout>
     </ScrollView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crea scorciatoia"
-        android:id="@+id/button4"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

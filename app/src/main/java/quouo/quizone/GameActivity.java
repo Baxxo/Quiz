@@ -9,8 +9,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -121,11 +119,35 @@ public class GameActivity extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                p.edit().clear().commit();
-                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                startActivity(intent);
-                finish();
+                d = new Dialog(GameActivity.this);
+                d.setContentView(R.layout.esci);
+                d.show();
+
+                TextView tv = (TextView) d.findViewById(R.id.textView2);
+                tv.setText("Sei sicuro di voler fare il LogOut?");
+
+                Button log = (Button) d.findViewById(R.id.esci1);
+                log.setText("LogOut");
+                log.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editor.remove("nome");
+                        editor.remove("pass");
+                        editor.apply();
+                        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                Button torna = (Button) d.findViewById(R.id.torna);
+                torna.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.dismiss();
+                    }
+                });
+                return;
             }
         });
 
@@ -243,7 +265,7 @@ public class GameActivity extends AppCompatActivity {
         row.setGravity(Gravity.CENTER_VERTICAL);
 
         TextView nome = new TextView(getApplicationContext());
-        nome.setText(richiesta.getNemico());
+        nome.setText("      " + richiesta.getNemico());
         nome.setTextColor(Color.BLACK);
 
         TextView nullo = new TextView(getApplicationContext());

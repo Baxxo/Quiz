@@ -35,15 +35,6 @@ public class Cerca extends AppCompatActivity {
         ConnectionHandler con = new ConnectionHandler();
         richieste = con.CaricaRichieste(Player.id);
 
-        s = (Button) findViewById(R.id.button4);
-
-        s.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addShortcut();
-            }
-        });
-
         Button b = (Button) findViewById(R.id.cercaGiocatore);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,26 +247,5 @@ public class Cerca extends AppCompatActivity {
                 break;
         }
         return super.onTouchEvent(event);
-    }
-
-    private void addShortcut() {
-        Intent shortcutIntent = new Intent(getApplicationContext(),
-                StartActivity.class);
-
-        shortcutIntent.setAction(Intent.ACTION_MAIN);
-
-        Intent addIntent = new Intent();
-        addIntent
-                .putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "QuizOne");
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                Intent.ShortcutIconResource.fromContext(getApplicationContext(),
-                        R.drawable.logo));
-
-        addIntent
-                .setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        getApplicationContext().sendBroadcast(addIntent);
-
-        Toast.makeText(this, "Aggiunta una scorciatoia nella Home Screen", Toast.LENGTH_SHORT);
     }
 }
