@@ -10,6 +10,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -28,7 +31,6 @@ public class GameActivity extends AppCompatActivity {
     TableLayout linearLayout;
     Richieste[] richieste;
     private float x1, x2;
-    static final int MIN_DISTANCE = 250;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
@@ -55,7 +57,7 @@ public class GameActivity extends AppCompatActivity {
 
         usern.setText(Player.nome);
         usern.setClickable(true);
-        usern.setTextColor(Color.BLUE);
+        usern.setTextColor(Color.BLACK);
         usern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +74,14 @@ public class GameActivity extends AppCompatActivity {
                 TextView vinte = (TextView) u.findViewById(R.id.textView13);
                 TextView par = (TextView) u.findViewById(R.id.textView14);
                 TextView per = (TextView) u.findViewById(R.id.textView15);
+                Button esci = (Button) u.findViewById(R.id.logOut);
+
+                esci.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LogOut();
+                    }
+                });
 
                 user.setText(String.valueOf(Player.nome));
                 vinte.setText(String.valueOf(Player.vinte));
@@ -114,43 +124,6 @@ public class GameActivity extends AppCompatActivity {
                 }
             });
         }
-
-        TextView logOut = (TextView) findViewById(R.id.textView3);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                d = new Dialog(GameActivity.this);
-                d.setContentView(R.layout.esci);
-                d.show();
-
-                TextView tv = (TextView) d.findViewById(R.id.textView2);
-                tv.setText("Sei sicuro di voler fare il LogOut?");
-
-                Button log = (Button) d.findViewById(R.id.esci1);
-                log.setText("LogOut");
-                log.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        editor.remove("nome");
-                        editor.remove("pass");
-                        editor.apply();
-                        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-
-                Button torna = (Button) d.findViewById(R.id.torna);
-                torna.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        d.dismiss();
-                    }
-                });
-                return;
-            }
-        });
-
 
         gioca.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,7 +312,7 @@ public class GameActivity extends AppCompatActivity {
         return;
     }
 
-    @Override
+    /*@Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -348,14 +321,71 @@ public class GameActivity extends AppCompatActivity {
             case MotionEvent.ACTION_UP:
                 x2 = event.getX();
                 float delta = x2 - x1;
-                if (Math.abs(delta) > MIN_DISTANCE || Math.abs(delta) < -MIN_DISTANCE) {
-                    Intent i = new Intent(getApplicationContext(), Cerca.class);
-                    startActivity(i);
-                    finish();
+                if (Math.abs(delta) > 250 || Math.abs(delta) < -250) {
+                    CercaIntent();
                 }
                 break;
         }
         return super.onTouchEvent(event);
+    }*/
+
+    private void CercaIntent(){
+        Intent i = new Intent(getApplicationContext(), Cerca.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater m = getMenuInflater();
+        m.inflate(R.menu.but, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.agg:
+                linearLayout.removeAllViews();
+                makeToast("Aggiorno");
+                Richieste();
+                break;
+            case R.id.cerca:
+                CercaIntent();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void LogOut(){
+        d = new Dialog(GameActivity.this);
+        d.setContentView(R.layout.esci);
+        d.show();
+
+        TextView tv = (TextView) d.findViewById(R.id.textView2);
+        tv.setText("Sei sicuro di voler fare il LogOut?");
+
+        Button log = (Button) d.findViewById(R.id.esci1);
+        log.setText("LogOut");
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.remove("nome");
+                editor.remove("pass");
+                editor.apply();
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        Button torna = (Button) d.findViewById(R.id.torna);
+        torna.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
     }
 
     private void makeToast(String text) {

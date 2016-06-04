@@ -104,4 +104,14 @@
         android:text="                      "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogOut"
+        android:id="@+id/logOut"
+        android:layout_below="@+id/textTot"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="#ff1414" />
+
 </RelativeLayout>
