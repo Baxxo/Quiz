@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#7ef1e5"
+    android:background="#ffda8e"
     tools:context="quouo.quizone.QuizActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -117,7 +117,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
             android:layout_marginTop="10dp"
-            android:background="#e5d0ff" />
+            android:background="#ffa500" />
 
         <Button
             android:layout_width="320dp"

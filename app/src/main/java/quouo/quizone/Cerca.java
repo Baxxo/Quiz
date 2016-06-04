@@ -84,6 +84,7 @@ public class Cerca extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                     intent.putExtra("idPartita", crea[0]);
                     intent.putExtra("avversario", crea[1]);
+                    intent.putExtra("avversarioPunt", -1);
                     startActivity(intent);
                     finish();
                 } else {
@@ -196,6 +197,7 @@ public class Cerca extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                     intent.putExtra("idPartita", richiesta.getIdRichiesta());
                     intent.putExtra("avversario", richiesta.getNemico());
+                    intent.putExtra("avversarioPunt", richiesta.getNemicoPunt());
                     startActivity(intent);
                     finish();
                 } else {

@@ -72,7 +72,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
 
         for (int i = 0; i < 4; i++) {
             buttons[i].setText(domande[index].getRisposta(i).getTesto());
-            buttons[i].setBackgroundColor(Color.parseColor("#cfadf6"));
+            buttons[i].setBackgroundColor(Color.parseColor("#ffa500"));
             final int temp = i;
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -166,6 +166,7 @@ public class QuizActivity extends AppCompatActivity implements ITimer {
         Intent intent = new Intent(getApplicationContext(), gameOver.class);
         System.out.println("Punteggio da passare" + punteggio);
         intent.putExtra("Punteggio", punteggio);
+        intent.putExtra("avversarioPunt", getIntent().getExtras().getInt("avversarioPunt"));
         startActivity(intent);
         this.finish();
     }
