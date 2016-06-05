@@ -7,6 +7,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +21,8 @@ import android.widget.Toast;
 
 public class Cerca extends AppCompatActivity {
     Richieste[] richieste;
-
     LinearLayout linearLayout;
-    private float x1, x2;
-    static final int MIN_DISTANCE = 150;
+    float x;
     Button s;
 
     @Override
@@ -233,16 +234,28 @@ public class Cerca extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
+                x = event.getX();
                 break;
             case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                float delta = x2 - x1;
-                if (Math.abs(delta) > MIN_DISTANCE || Math.abs(delta) < -MIN_DISTANCE) {
+                float delta = event.getX() - x;
+                if (delta > 250) {
                     TornaNelMenuPrincipale();
                 }
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater m = getMenuInflater();
+        m.inflate(R.menu.cerca, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        TornaNelMenuPrincipale();
+        return super.onOptionsItemSelected(item);
     }
 }

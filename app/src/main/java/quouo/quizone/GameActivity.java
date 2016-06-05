@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     Dialog d;
     Dialog u;
     String ret;
+    float x;
     TableLayout linearLayout;
     Richieste[] richieste;
     SharedPreferences preferences;
@@ -312,22 +313,21 @@ public class GameActivity extends AppCompatActivity {
         return;
     }
 
-    /*@Override
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
+                x = event.getX();
                 break;
             case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                float delta = x2 - x1;
-                if (Math.abs(delta) > 250 || Math.abs(delta) < -250) {
+                float delta = event.getX() - x;
+                if (delta < -250) {
                     CercaIntent();
                 }
                 break;
         }
         return super.onTouchEvent(event);
-    }*/
+    }
 
     private void CercaIntent() {
         Intent i = new Intent(getApplicationContext(), Cerca.class);
@@ -347,7 +347,6 @@ public class GameActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.agg:
                 linearLayout.removeAllViews();
-                makeToast("Sto aggiornando");
                 makeToast("Sto aggiornando");
                 Richieste();
                 break;

@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/agg"
-        android:title="Aggiorna"
+        android:title="Aggiorna  "
         app:showAsAction="always"/>
     <item
         android:id="@+id/cerca"
-        android:title="Cerca"
+        android:title="  Cerca "
         app:showAsAction="always"/>
 
 </menu>
