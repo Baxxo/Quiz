@@ -100,9 +100,6 @@ public class Cerca extends AppCompatActivity {
         linearLayout.addView(t);
     }
 
-    //////////////////////////////////////////
-
-
     private void CaricaDomande(String nome) {
         for (int i = richieste.length - 1; i >= 0; i--) {
             if (richieste[i].getNemico().equals(nome)) {

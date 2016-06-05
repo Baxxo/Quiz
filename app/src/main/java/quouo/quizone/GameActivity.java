@@ -28,9 +28,9 @@ public class GameActivity extends AppCompatActivity {
     Button gioca;
     Dialog d;
     Dialog u;
+    String ret;
     TableLayout linearLayout;
     Richieste[] richieste;
-    private float x1, x2;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 u = new Dialog(GameActivity.this);
-                u.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+                u.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 u.setContentView(R.layout.profile);
 
                 u.show();
@@ -270,7 +270,7 @@ public class GameActivity extends AppCompatActivity {
                 if (Functions.hasConnection(getApplicationContext())) {
                     linearLayout.removeView(row);
                     ConnectionHandler con = new ConnectionHandler();
-                    String ret = con.InviaPunteggio(Player.id, richiesta.getIdRichiesta(), -2);
+                    ret = con.InviaPunteggio(Player.id, richiesta.getIdRichiesta(), -2);
                     AggiungiRichiestaAspetta(richiesta, "Ti sei arresso");
                 } else {
                     makeToast("Non c'e' internet");
@@ -329,7 +329,7 @@ public class GameActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }*/
 
-    private void CercaIntent(){
+    private void CercaIntent() {
         Intent i = new Intent(getApplicationContext(), Cerca.class);
         startActivity(i);
         finish();
@@ -344,10 +344,11 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.agg:
                 linearLayout.removeAllViews();
-                makeToast("Aggiorno");
+                makeToast("Sto aggiornando");
+                makeToast("Sto aggiornando");
                 Richieste();
                 break;
             case R.id.cerca:
@@ -357,7 +358,7 @@ public class GameActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void LogOut(){
+    private void LogOut() {
         d = new Dialog(GameActivity.this);
         d.setContentView(R.layout.esci);
         d.show();
