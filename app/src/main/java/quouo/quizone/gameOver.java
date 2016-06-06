@@ -69,12 +69,6 @@ public class gameOver extends AppCompatActivity {
                 share.putExtra(Intent.EXTRA_TEXT, message);
 
                 startActivity(Intent.createChooser(share, "QuizOne"));
-                /*
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hei ho fatto " + punteggio  + " punti!!!");
-                sendIntent.setType("text/type");
-                startActivity(sendIntent);*/
             }
         });
 
