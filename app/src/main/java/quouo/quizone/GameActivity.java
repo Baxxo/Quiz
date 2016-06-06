@@ -244,11 +244,14 @@ public class GameActivity extends AppCompatActivity {
         TextView nullo = new TextView(getApplicationContext());
         nullo.setText("     ");
 
-        Button accetta = new Button(getApplicationContext());
+        final Button accetta = new Button(getApplicationContext());
         accetta.setText("Accetta");
+        accetta.setBackgroundColor(Color.parseColor("#fefbd6"));
+        accetta.setTextColor(Color.BLACK);
         accetta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                accetta.setBackgroundColor(Color.parseColor("#FFFFE386"));
                 if (Functions.hasConnection(getApplicationContext())) {
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
                     intent.putExtra("idPartita", richiesta.getIdRichiesta());
@@ -262,11 +265,14 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Button rifiuta = new Button(getApplicationContext());
+        final Button rifiuta = new Button(getApplicationContext());
         rifiuta.setText("Arrenditi");
+        rifiuta.setBackgroundColor(Color.parseColor("#fefbd6"));
+        rifiuta.setTextColor(Color.BLACK);
         rifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                rifiuta.setBackgroundColor(Color.parseColor("#FFFFE386"));
                 if (Functions.hasConnection(getApplicationContext())) {
                     linearLayout.removeView(row);
                     ConnectionHandler con = new ConnectionHandler();

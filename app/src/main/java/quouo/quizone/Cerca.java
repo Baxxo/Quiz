@@ -67,6 +67,7 @@ public class Cerca extends AppCompatActivity {
     private void AggiungiGiocattore(final String id) {
         Button b = new Button(getApplicationContext());
         b.setText("Sfida");
+        b.setBackgroundColor(Color.parseColor("#fefbd6"));
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
