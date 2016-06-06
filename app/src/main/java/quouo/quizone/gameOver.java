@@ -55,14 +55,14 @@ public class gameOver extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (punteggio == 1) {
-                    message = "Giocando a QuizOne ho fatto solo un punto\n" + "Scaricalo anche tu così possiamo gicare\nhttps://drive.google.com/open?id=0B9uigSlRi5RXVkROMDFNbHgyMTA";
+                    message = "Giocando a QuizOne ho fatto solo un punto\n" + "Scaricalo anche tu così possiamo gicare\nhttps://drive.google.com/open?id=0B9uigSlRi5RXUllRejRJSEpidzQ";
                 }
                 if (punteggio > 1) {
-                    message = "Giocando a QuizOne ho fatto " + punteggio + " punti!!!\n" + "Scaricalo anche tu così possiamo gicare\nhttps://drive.google.com/open?id=0B9uigSlRi5RXVkROMDFNbHgyMTA";
+                    message = "Giocando a QuizOne ho fatto " + punteggio + " punti!!!\n" + "Scaricalo anche tu così possiamo gicare\nhttps://drive.google.com/open?id=0B9uigSlRi5RXUllRejRJSEpidzQ";
                     ;
                 }
                 if (punteggio < 1) {
-                    message = "Brutta partita a QuizOne... 0 punti\n" + "Scaricalo anche tu così possiamo gicare\nhttps://drive.google.com/open?id=0B9uigSlRi5RXVkROMDFNbHgyMTA";
+                    message = "Brutta partita a QuizOne... 0 punti\n" + "Scaricalo anche tu così possiamo gicare\nhttps://drive.google.com/open?id=0B9uigSlRi5RXUllRejRJSEpidzQ";
                 }
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
