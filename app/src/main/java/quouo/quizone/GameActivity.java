@@ -57,7 +57,6 @@ public class GameActivity extends AppCompatActivity {
 
         usern.setText(Player.nome);
         usern.setClickable(true);
-        usern.setTextColor(Color.BLACK);
         usern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,7 +187,6 @@ public class GameActivity extends AppCompatActivity {
         TextView partite = (TextView) findViewById(R.id.partite);
         Player.setPar(stats[0], stats[1], stats[2]);
         partite.setText("Vin: " + stats[0] + " Par: " + stats[1] + " Per: " + stats[2]);
-        partite.setTextColor(Color.BLACK);
     }
 
     private void AggiungiRichiestaAspetta(final Richieste richiesta, final String testo) {
