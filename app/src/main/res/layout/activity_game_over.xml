@@ -39,8 +39,7 @@
         android:layout_height="wrap_content"
         android:text="Torna al menù"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="28dp" />
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -56,9 +55,20 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Hai vinto contro Demian"
         android:id="@+id/textView16"
-        android:layout_marginTop="56dp"
-        android:layout_below="@+id/ratingBar"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/back"
+        android:layout_marginBottom="40dp"
+        android:layout_below="@+id/ratingBar" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share"
+        android:id="@+id/share"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="68dp" />
 
 
 </RelativeLayout>
