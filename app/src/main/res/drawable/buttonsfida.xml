@@ -11,9 +11,9 @@
         android:type="linear" />
     <size
         android:width="200dp"
-        android:height="300dp" />
+        android:height="200dp" />
     <stroke
-        android:width="3dp"
+        android:width="4dp"
         android:color="#FFFFFF" />
 
 </shape>

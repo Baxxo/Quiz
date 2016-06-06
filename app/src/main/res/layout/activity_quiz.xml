@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#ffda8e"
+    android:background="#8effc5"
     tools:context="quouo.quizone.QuizActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -137,7 +137,8 @@
         android:text="1/5"
         android:id="@+id/numeroDomanda"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
 
 

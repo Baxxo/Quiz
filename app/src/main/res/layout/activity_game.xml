@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="quouo.quizone.GameActivity"
-    android:background="#ffda8e"
+    android:background="#8effc5"
     android:contextClickable="false">
 
 
@@ -40,7 +40,7 @@
         android:id="@+id/start"
         android:layout_width="150dp"
         android:layout_height="150dp"
-
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@drawable/buttonsfida"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -53,7 +53,6 @@
         android:textSize="40sp"
         android:textStyle="bold"
         android:layout_below="@+id/view2"
-        android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true" />
 
     <View
