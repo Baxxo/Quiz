@@ -53,8 +53,7 @@
         android:textSize="40sp"
         android:textStyle="bold"
         android:layout_below="@+id/view2"
-        android:layout_centerHorizontal="true"
-        android:onClick="animazione"/>
+        android:layout_centerHorizontal="true"/>
 
     <View
         android:layout_width="fill_parent"
