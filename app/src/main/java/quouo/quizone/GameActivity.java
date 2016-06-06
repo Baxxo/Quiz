@@ -330,6 +330,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void CercaIntent() {
+        Toast.makeText(this,"Prova a fare uno swipe la prossima volta", Toast.LENGTH_LONG);
         Intent i = new Intent(getApplicationContext(), Cerca.class);
         startActivity(i);
         finish();
