@@ -130,7 +130,7 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gioca.setBackgroundResource(R.drawable.buttonsfida2);
                 gioca.setTextColor(Color.BLUE);
-                /*if (Functions.hasConnection(getApplicationContext())) {
+                if (Functions.hasConnection(getApplicationContext())) {
                     ConnectionHandler con = new ConnectionHandler();
                     String[] crea = con.CreaPartita(Player.id).split("<->");
                     Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
@@ -141,7 +141,7 @@ public class GameActivity extends AppCompatActivity {
                     finish();
                 } else {
                     makeToast("Non c'e' internet");
-                }*/
+                }
             }
         });
 
@@ -291,6 +291,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         d = new Dialog(this);
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
         d.setCancelable(true);
         d.setContentView(R.layout.esci);
         d.show();

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -199,6 +200,7 @@ public class StartActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         d = new Dialog(this);
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
         d.setCancelable(true);
         d.setContentView(R.layout.esci);
         d.show();

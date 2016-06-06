@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#8effc5"
+    android:background="@drawable/sfondo"
     tools:context="quouo.quizone.QuizActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/tableLayout"
-        android:background="#ffffff">
+        android:background="#ceebff">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="50dp"
-        android:background="#ffffff"
+        android:background="#ceebff"
         android:radius="10dp"
         android:weightSum="1"
         android:id="@+id/tableLayout">
@@ -97,7 +97,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
             android:layout_marginTop="10dp"
-            android:background="#7ef1e5" />
+            android:background="#FFFFFF" />
 
         <Button
             android:layout_width="320dp"
@@ -107,7 +107,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
             android:layout_marginTop="10dp"
-            android:background="#cfadf6" />
+            android:background="#FFFFFF" />
 
         <Button
             android:layout_width="320dp"
@@ -117,7 +117,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
             android:layout_marginTop="10dp"
-            android:background="#ffa500" />
+            android:background="#FFFFFF" />
 
         <Button
             android:layout_width="320dp"
@@ -127,7 +127,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
             android:layout_marginTop="10dp"
-            android:background="#e5d0ff" />
+            android:background="#FFFFFF" />
     </LinearLayout>
 
     <TextView
